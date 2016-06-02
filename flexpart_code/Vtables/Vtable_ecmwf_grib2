@@ -1,0 +1,28 @@
+fpname   | paramId | indofParam | discipline | category | number | typeSurf  | typeofLevel        | units     | shortName |   description      | gribVersion | center |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+---------+
+TT       |         |            |     0      |    0     |    0   |  105      |  hybrid            |    K      |    t      | Temperature        |     2      | ecmf   |
+UU       |         |            |     0      |    2     |    2   |  105      |  hybrid            | m s**-1   |    u      | U component of wind|     2      | ecmf   |
+VV       |         |            |     0      |    2     |    3   |  105      |  hybrid            | m s**-1   |    v      | V component of wind|     2      | ecmf   |
+QV       |         |            |     0      |    1     |    0   |  105      |  hybrid            | kg kg**-1 |    q      | Specific humidity  |     2      | ecmf   |
+PS       |         |            |     0      |    3     |    0   |  1        |  surface           | Pa        |    sp     | Surface pressure   |     2      | ecmf   |
+ETADOT   |         |            |     0      |    2     |   32   |  105      |  hybrid            |   s**-1   |  etadot   | Eta-coord vert vel |     2      | ecmf   |
+SD       |         |            |     0      |    1     |   11   |  1        |  surface           | m         |    sd     | Snow depth         |     2      | ecmf   |
+MSL      |         |            |     0      |    3     |    0   |  101      |  mean Sea          | Pa        |  msl      | Mean sea lev. pres.|     2      | ecmf   |
+TCC      |         |            |     192    |    128   |   164  |  1        |  surface           | (0 - 1)   |  tcc      | Total cloud cover  |     2      | ecmf   |
+U10      |         |            |     0      |    2     |    2   |  103      |  heightAboveGround | m s**-1   |    10u    | 10 m U wind comp.  |     2      | ecmf   |
+V10      |         |            |     0      |    2     |    3   |  103      |  heightAboveGround | m s**-1   |    10v    | 10 m V wind comp.  |     2      | ecmf   |
+T2       |         |            |     0      |    0     |    0   |  103      |  heightAboveGround |    K      |    2t     | 2m temperature     |     2      | ecmf   |  
+TD2      |         |            |     0      |    0     |    6   |  103      |  heightAboveGround |    K      |    2d     | 2m dewpoint temp   |     2      | ecmf   |
+LSPREC   |         |            |     192    |    128   |   142  |   1       |  heightAboveGround |    m      |    lsp    | Large-scale precip.|     2      | ecmf   |
+CONVPREC |         |            |     0      |    1     |   10   |   1       |  surface           | kg m**-2  |   acpcp   | Convective precip. |     2      | ecmf   |
+SHF      |         |            |     0      |    0     |   11   |   1       |  surface           | J m**-2   |   sshf    | Surf sens. heat flx|     2      | ecmf   |
+SR       |         |            |     0      |    4     |   9    |   1       |  surface           | J m**-2   |   ssr     | Surf net solar rad |     2      | ecmf   |
+EWSS     |         |            |     0      |    2     |   38   |   1       |  surface           | N m**-2 s |   ewss    | EW turb surf stress|     2      | ecmf   |
+NSSS     |         |            |     0      |    2     |   37   |   1       |  surface           | N m**-2 s |   nsss    | NS turb surf stress|     2      | ecmf   |
+ORO      |         |            |     0      |    3     |   4    |   1       |  surface           |    m      |    z      | Geopotential       |     2      | ecmf   |
+EXCESSORO|         |            |   192      |    128   |   160  |   1       |  surface           |  none     |   sdor    | Stddev orography   |     2      | ecmf   |
+LSM      |         |            |     2      |    0     |   0    |   1       |  surface           | (0 - 1)   |   lsm     | Land-sea mask      |     2      | ecmf   |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+--------+
+#
+#  Vtable for ECMWF model-level data in GRIB2 from the MARS server.
+# typeSurf = typeOfFirstFixedSurface

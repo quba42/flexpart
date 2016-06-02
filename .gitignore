@@ -1,5 +1,0 @@
-FP_ecmwf_gfortran*
-*.o
-*_mod.mod
-.DS_Store
-output

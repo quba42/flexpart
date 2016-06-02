@@ -1,0 +1,318 @@
+
+
+README for grib2nc4 v1.0
+
+Contact: Don Morton, don.morton@borealscicomp.com  
+         Delia Arnold, deliona.arnold@gmail.com
+         M. Harustak
+
+Last Update: 29 May 2016
+
+======================================================================
+1. Introduction
+======================================================================
+
+grib2nc4 comes from a request by users to make FLEXPART-preprocessed met data
+available in an easy-to-access way.  In short, it uses preprocessing routines
+already developed for FLEXPART to open an ECMWF or NCEP met file and perform
+all the operations that FLEXPART normally does in order to prepare the met
+data for computations.  It then takes the data which has been stored in
+FLEXPART global arrays and selectively writes it to a NetCDF4 file.
+
+This distribution is integrated into the FLEXPART source code, in a grib2nc4
+subdirectory, but it doesn't necessarily have to reside there.  The 
+FLEXPART_SRC variable in the Makefile allows for an alternate FP source code
+location.  The FLEXPART source code used by grib2nc4 must be FPv9.3, developed
+through CTBTO funding.  FPv9.3 contains new routines that support the 
+preprocessing of met data files - this capability does not exist in earlier
+versions.  grib2nc4 is also dependent on the Vtable processing requirements
+of FPv9.3.
+
+grib2nc4 relies heavily on grib-api and NetCDF4 libraries, which have their
+own dependencies.  Under the assumption that the libraries are installed
+correctly, the grib2nc4 binary can be produced by specifying the location
+of these libraries at the top of the Makefile and then making.
+
+A special "make test" option is available for an initial sanity check and
+to aid with future debugging, development and testing activities.  Under
+this scenario, additional routines in the executable will be available, and
+they will be used to read in a small sample ECMWF GRIB file, preprocess it,
+write it to NC4 file, then read it back and compare with the preprocessed
+data still in the FLEXPART arrays.  It does not test whether preprocessing
+is good, but only whether data was stored correctly in the NC4 files.
+
+======================================================================
+2. Quick-Start
+======================================================================
+
+This section assumes that all library dependencies have been resolved,
+and someone wants to simply compile and run.  If you are not this fortunate,
+you should go to the next section, Installation, then come back here to run.
+
+To compile, it should suffice to insure that the following Makefile variables
+are set correctly
+
+    FLEXPART_SRC = ..
+
+    GRIBAPI = /opt/grib-api
+    NETCDFF = /opt/netcdf-fortran-4.4.3
+    NETCDF = /opt/netcdf-c-4.4.0
+
+If you are compiling in the grib2nc4 subdirectory of the FLEXPART source code
+distribution, then there should be no need to change FLEXPART_SRC.
+
+Simply type "make" (noting that you may see some warnings related to
+variables for nests) to produce grib2nc4.
+
+Before trying to run, you might want to try "make test" to make sure that
+the simple test works as expected.
+
+grib2nc4 relies on Vtables to map GRIB variables to FLEXPART variables.  
+Vtables for ECMWF and NCEP GRIB1 and GRIB2 data are availaible in the
+FLEXPART Vtables subdirectory.  The Vtable needs to be present in your
+working directory.  If you are not sure which one to use, you can simply
+copy in all of them from the FLEXPART Vtables subdirectory.
+
+Usage is simple - grib2nc4 requires two arguments - a path to the 
+GRIB met file and a path to the NetCDF4 file to be created.  
+
+WARNING - there is currently nothing to protect you if you get these out 
+of order.  It is possible for you to overwrite your met file if you use it 
+as the second argument.
+
+Sample usage:
+
+  ./grib2nc4 GD15051200 def9_nc1p0.nc4
+
+By default, grib2nc4 will write the 3d u, v and t fields, as well as the 
+terrain-following heights of the levels and geographic information.
+
+It is possible to write two more option variables, w and q, simply by adding 
+them to the command.  For example: 
+
+  ./grib2nc4 GD15051200 def9_nc1p0.nc4  q  w
+
+======================================================================
+3.  Installation
+======================================================================
+
+Under the assumption that a satisfactory set of GRIB-API, HDF5, and NetCDF libs
+are available, as well as compatible FLEXPART source code, users should be able
+to define these locations in the Makefile and type "make"
+
+    FLEXPART_SRC = ..
+    GRIBAPI = /opt/grib-api
+    NETCDFF = /opt/netcdf-fortran-4.4.3
+    NETCDF = /opt/netcdf-c-4.4.0
+
+GRIBAPI installation is defined in other places.  Because the installation of
+HDF5 and NETCDF can be confusing, a set of installation notes is presented 
+here.  They have worked for me on two different machines, and take some
+time to complete.  Further, at this point in time they produce only dynamic
+libs, but this will hopefully change in the near future.
+
+Compression capabilities of NetCDF4 depend on HDF5, so that needs to be
+installed first.  All examples are presented with a fictitious MYDIR directory,
+which may be in a user's directory if needed.
+
+    mkdir MYDIR/usr
+
+(This may be different by the time you try)
+    wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.16.tar.gz
+
+    ./configure --prefix=MYDIR/usr/local/hdf5-1.8.16 \
+                --enable-fortran --enable-cxx
+    make
+    make check
+    make install
+    make check-install
+
+
+Then, NetCDF needs to be installed by first installing the C libs, then the
+Fortran libs
+
+    wget https://github.com/Unidata/netcdf-c/archive/v4.4.0.tar.gz
+
+    CPPFLAGS=-IMYDIR/usr/local/hdf5-1.8.16/include \
+             LDFLAGS=-LMYDIR/usr/local/hdf5-1.8.16/lib \
+             ./configure --prefix=MYDIR/usr/local/netcdf-c-4.4.0
+
+    make
+    make check
+    make install
+
+Then, for the Fortran libs
+
+    wget https://github.com/Unidata/netcdf-fortran/archive/v4.4.3.tar.gz
+
+    CPPFLAGS=-IMYDIR/usr/local/netcdf-c-4.4.0/include \
+              LDFLAGS=-LMYDIR/usr/local/netcdf-c-4.4.0/lib \
+              LD_LIBRARY_PATH=MYDIR/usr/local/netcdf-c-4.4.0/lib \
+              ./configure --prefix=MYDIR/usr/local/netcdf-fortran-4.4.3
+
+    make
+    make check
+    make install
+
+Good luck!!  For your convenience, I am providing you with a Fortran 
+program I created to test my installation of the libs.  It may be 
+overkill, but if you're having a problem compiling grib2nc4, you might
+want to back up and make sure that your libs are providing the core
+functionality needed by grib2nc4.
+
+This Fortran 90 test program generates its own data, writes it (compressed)
+to a NetCDF4 file, then opens the file for reading and reads the data back
+in.
+
+!!!!!!!!!!!!!!!!!!
+program simp1
+
+    !!  Simple program to test system capabilities for writing/reading
+    !!  NetCDF-4 files.
+
+    use netcdf
+
+    character (len=*), parameter :: FILE_NAME="gen1.nc"
+    integer, parameter :: NX=720, NY=360, NZ=200
+    integer, parameter :: DEFLATE_LEVEL = 2
+
+    double precision, dimension(NX, NY, NZ) :: U
+
+    integer :: i, j, k
+    integer :: ncid, retval
+    integer :: x_dimid, y_dimid, z_dimid, dimids(3)
+    integer :: u_varid
+
+    ! Fill with arbitrary values
+    do j=1,NY
+        do i=1,NX
+            do k=1,NZ
+                U(i,j,k) = DBLE(i+j+k)
+            enddo
+        enddo
+    enddo
+
+    !print *, U
+
+    print *, "Creating nc file for writing"
+    !retval = nf90_create(FILE_NAME, NF90_CLOBBER, ncid)
+    retval = nf90_create(FILE_NAME, OR(NF90_CLOBBER, NF90_HDF5), ncid)
+    print *, 'Created file: ', retval
+
+    !--------- Define the metadata
+    ! Define the dimensions, and get dimension ids passed back
+    retval = nf90_def_dim(ncid, "x", NX, x_dimid)
+    retval = nf90_def_dim(ncid, "y", NY, y_dimid)
+    retval = nf90_def_dim(ncid, "z", NZ, z_dimid)
+    dimids = (/ x_dimid, y_dimid, z_dimid /)
+
+    ! Define U metadata and save varids
+    retval = nf90_def_var(ncid, "U", NF90_DOUBLE, dimids, u_varid)
+    print *, "Defined U: ", retval
+    ! Set deflate for each variable
+    retval = nf90_def_var_deflate(ncid, u_varid, &
+&                                 shuffle=0,     &
+&                                 deflate=1,     &
+&                                 deflate_level=DEFLATE_LEVEL)
+
+    retval = nf90_enddef(ncid)
+    print *, "Ended metadata definitions: ", retval
+
+    ! Write the data arrays
+    retval = nf90_put_var(ncid, u_varid, U)
+    print *, "SUM(U): ", sum(U)
+    print *, "Wrote U: ", retval
+    print *, trim(nf90_strerror(retval))
+
+    print *, "Closing nc file"
+    retval = nf90_close(ncid)
+
+    !!!!!!!!!!!!!!  Reading  !!!!!!!!!!!!!!!!!!!!
+    print *, "Opening nc file for reading"
+    retval = nf90_open(FILE_NAME, NF90_NOWRITE, ncid)
+
+    ! Get the varid of each
+    retval = nf90_inq_varid(ncid, 'U', u_varid)
+
+    ! Read each one
+    retval = nf90_get_var(ncid, u_varid, U)
+
+    print *, "SUM(U): ", sum(U)
+
+    print *, "Closing nc file"
+    retval = nf90_close(ncid)
+end program simp1
+!!!!!!!!!!!!!!!!!!
+
+and, this is the Makefile, again using the fictitious MYDIR location of libs
+
+###########################################
+FC=gfortran
+
+BINARY=simp1
+
+ROOT=MYDIR
+INCLUDE = -I${ROOT}/netcdf-fortran-4.4.3/include
+
+FFLAGS =
+LDFLAGS =
+LIB=-L${ROOT}/netcdf-fortran-4.4.3/lib -lnetcdff -L${ROOT}/netcdf-c-4.4.0/lib -lnetcdf -lnetcdf
+
+all : ${BINARY}
+
+${BINARY} : ${BINARY}.o
+        ${FC} -o ${BINARY} ${LDFLAGS} ${BINARY}.o ${LIB}
+
+${BINARY}.o : ${BINARY}.f90 makefile
+        ${FC} -c ${FFLAGS} ${INCLUDE} ${BINARY}.f90
+###########################################
+
+
+This is set up to run with shared libs.  I don't particularly like this, but
+creating static libs for HDF5 and NetCDF4 combinations is, apparently,
+discouraged by some, and I haven't had the time yet to explore all of this.
+So, in order to run this sample program (as well as grib2nc4), it's necessary
+to insure the libs are accessible, as follows
+
+    export LD_LIBRARY_PATH='MYDIR/usr/local/netcdf-fortran-4.4.3/lib:MYDIR/usr/local/netcdf-c-4.4.0/lib'
+
+======================================================================
+4. Performance / To-Do
+======================================================================
+
+In general, the code is mature, but could be modified based on user
+requests.  However, the compression isn't as much as I had hoped for.  
+In fact, it kind of stinks.  But, I think that's the price we pay for using
+NetCDF as storage.
+
+Here are some examples.  DEFLATE 0 is no compression, DEFLATE 2 is considered
+by some to be a good balance of time and compression, and DEFLATE 9 is 
+maximum compression.  In these cases, we are only stored u, v and t (plus
+some small, miscellaneous stuff)
+
+                    ---------------------------------------------------
+			ECMWF 1.0deg	NCEP 1.0 degr	ECMWF 0.5 deg
+                    ---------------------------------------------------
+Orig GRIB Mbytes	112		19		553
+----------------    ---------------------------------------------------
+DEFLATE 2
+	Time		3 min		18 sec		3 min
+	Mbytes		112		20		739
+----------------    ---------------------------------------------------
+DEFLATE 9
+	Time		9 min 		75 sec		15 min
+	Mbytes		106		19		415
+----------------    ---------------------------------------------------
+
+So, primary to-do items are
+
+1) Build a simple interface for putting this out in a pure binary form and
+assess its performance.  Keep in mind, however, that accessing subsets of
+data from NetCDF4 would be much simpler than with binary and, in fact, possibly
+more efficient.  If people are OK with the time for compression and file sizes,
+then it may not make sense to change this.
+
+2) Understand better how to make grib2nc4 static binaries that won't rely on
+local NetCDF, HDF5 and GRIB-API libraries
+
+

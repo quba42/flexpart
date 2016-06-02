@@ -1,0 +1,144 @@
+<distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Basic distro
+    </short_descr>
+
+    <distropath>
+        /home/morton/flexpart
+    </distropath>
+
+    <makefilepath>
+        /home/morton/makefile.tmp
+    </makefilepath>
+
+    <parmodpath>
+        /home/morton/par_mod.f90
+    </parmodpath>
+
+    <metcase>
+
+        <short_descr>
+            ECMWF patch 
+        </short_descr>
+
+        <metfiledir>
+            /home/morton/metfiles
+        </metfiledir>
+
+        <availablepath>
+            /home/morton/metfiles/AVAILABLE
+        </availablepath>
+
+
+        <runcase>
+            <short_descr>
+                Run case #1
+            </short_descr>
+
+            <casedir>
+                /home/morton/casedir/case01
+            </casedir>
+
+            <controldatadir>
+                /home/morton/casedir/case01/controldata
+            </controldatadir>
+
+            <basictest>
+                   
+                <short_descr>
+                    Max error over entire temporal and spatial domain
+                </short_descr>
+
+                <type>
+                    max_error
+                </type>
+
+		<max_threshold>
+		   1.0E-3 
+		</max_threshold>
+            </basictest>
+
+            <basictest>
+                <short_descr>
+                    RMS error over entire temporal and spatial domain
+                </short_descr>
+
+                <type>
+                    rmse
+                </type>
+
+		<max_threshold>
+		   1.0E-6 
+		</max_threshold>
+            </basictest>
+
+        </runcase>
+
+
+    </metcase>
+
+    <metcase>
+
+        <short_descr>
+            GFS Some date
+        </short_descr>
+
+        <metfiledir>
+            /home/morton/metfiles
+        </metfiledir>
+
+        <availablepath>
+            /home/morton/metfiles/AVAILABLE
+        </availablepath>
+
+
+        <runcase>
+            <short_descr>
+                Run case #1
+            </short_descr>
+
+            <casedir>
+                /home/morton/casedir/case01
+            </casedir>
+
+            <controldatadir>
+                /home/morton/casedir/case01/controldata
+            </controldatadir>
+
+            <basictest>
+                   
+                <short_descr>
+                    Max error over entire temporal and spatial domain
+                </short_descr>
+
+                <type>
+                    max_error
+                </type>
+
+		<max_threshold>
+		   1.0E-3 
+		</max_threshold>
+            </basictest>
+
+            <basictest>
+                <short_descr>
+                    RMS error over entire temporal and spatial domain
+                </short_descr>
+
+                <type>
+                    rmse
+                </type>
+
+		<max_threshold>
+		   1.0E-6 
+		</max_threshold>
+            </basictest>
+
+        </runcase>
+
+    </metcase>
+
+</distribution>

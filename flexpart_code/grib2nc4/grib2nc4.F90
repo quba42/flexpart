@@ -1,0 +1,137 @@
+PROGRAM grib2nc4
+
+    !*************************************************************************
+    !  This program uses the met file preprocessing capabilities of          *
+    !  FLEXPART to extract key 3d variables, process them into the FP        *
+    !  coordinate system, and write to NetCDF4.                              *
+    !                                                                        *
+    !        Don Morton (Boreal Scientific Computing LLC)                    *
+    !        Preprocessing methods, M. Harustak                              *
+    !                                                                        *
+    !        May 2016                                                        *
+    !*************************************************************************
+
+    USE par_mod
+    USE com_mod
+
+    USE netcdf
+    USE fp2nc4io_mod   ! Specialised module to interface preprocessed 
+                       ! FP met data with NetCDF4 files 
+
+    IMPLICIT NONE
+
+    LOGICAL :: metfile_exists   
+    INTEGER :: i, j, k
+    INTEGER :: num_optional_vars, num_vars
+    INTEGER, PARAMETER :: DEFLATE_LEVEL = 2  ! Compression level (0-9)
+    CHARACTER(LEN=512) :: met_filepath, netcdf4_filepath
+    CHARACTER, DIMENSION(:), ALLOCATABLE :: vars_list  ! list of variables
+    
+    INTEGER :: metdata_format = UNKNOWN_METDATA  ! From FP par_mod
+
+    !--------------------------------------------------------
+
+    ! Read in mandatory arguments
+    IF (IARGC() < 2) THEN
+        PRINT *, 'Usage: grib2netcdf4 <inpath> <outpath> [optional varnames]'
+        STOP
+    ELSE
+        CALL GETARG(1, met_filepath) 
+        !PRINT *, 'met_filepath: ', met_filepath
+        CALL GETARG(2, netcdf4_filepath) 
+    ENDIF
+
+    ! We want to insert 'u', 'v', and 't' into vars_list, by default
+    ! So, our list needs to have three elements, plus any optional args
+    ! from the command line
+
+    ! First, get the number of optional args and allocate vars_list,
+    ! and fill the first three elements
+    IF (IARGC() > 2) THEN
+        num_optional_vars = IARGC() - 2
+    ELSE
+        num_optional_vars = 0
+    ENDIF
+
+    num_vars = num_optional_vars + 3
+    ALLOCATE( vars_list(num_vars) )
+    vars_list(1) = 'u'
+    vars_list(2) = 'v'
+    vars_list(3) = 't'
+        
+    ! Read in optional variable arguments, starting at element 4 of vars_list
+    IF (IARGC() > 2) THEN
+        DO i=1,num_optional_vars
+            CALL GETARG( i+2, vars_list(i+3) )
+        ENDDO 
+    ENDIF
+
+    ! Before proceeding, let's make sure the vars_list is good - otherwise,
+    ! we don't want to waste time processing before finding out
+    IF ( .NOT. fp2nc4io_vars_are_valid(num_vars, vars_list) ) THEN
+        PRINT *, 'The variables list has an invalid variable...'
+        PRINT *, 'Valid variables: '
+        CALL fp2nc4io_print_valid_vars
+
+        PRINT *,
+        PRINT *, 'Your vars_list:'
+        DO i=1,num_vars
+            PRINT *, vars_list(i)
+        ENDDO
+        PRINT *,
+        PRINT *, 'Exiting...'
+        STOP
+    ENDIF
+
+
+    ! Insure that metfile_path is valid.  If so, put the file info
+    ! in com_mod variables numbwf and wfname
+    INQUIRE( FILE=met_filepath, EXIST=metfile_exists )
+    IF ( metfile_exists ) THEN
+        numbwf = 1
+        wfname(1) = met_filepath
+    ELSE
+        PRINT *, 'Unable to find metfile: ', TRIM(met_filepath)
+        STOP
+    ENDIF
+
+    ! Check the type of metdata using FP routine detectformat()
+    CALL detectformat(metdata_format)
+    IF (metdata_format == ECMWF_METDATA) THEN
+        PRINT *, ("ECMWF met data detected...")
+    ELSEIF (metdata_format == GFS_METDATA) THEN
+        PRINT *, ("NCEP met data detected...")
+    ELSE
+        PRINT *, ("Unknown met data detected...")
+        STOP
+    ENDIF
+
+    ! Set a couple of com_mod variables - I honestly don't know the reason 
+    ! for this now, but it was done in GRIB2FLEXPART, so I'm repeating it here.
+    ! The comment in there says "Reset the times of the wind fields that are
+    ! kept in memory to no time"
+    DO i=1,2
+        memind(i) = i
+        memtime(i) = 999999999
+    ENDDO
+
+    ! Read the model grid specifications,
+    ! both for the mother domain and eventual nests
+    !**********************************************
+    if (metdata_format == ECMWF_METDATA) CALL gridcheck_ecmwf
+    if (metdata_format == GFS_METDATA) CALL gridcheck_gfs
+
+    ! This is not yet implemented for nests.  It would probably be trivial
+    ! to do so
+    !CALL gridcheck_nests
+
+    PRINT *, 'Calling processmetfields()...'
+    call processmetfields( 1, metdata_format)
+
+    PRINT *, 'Calling fp2nc4io_dump()...'
+    call fp2nc4io_dump( netcdf4_filepath, num_vars, vars_list, DEFLATE_LEVEL)
+
+    PRINT *, 'End of grib2nc4'
+
+
+END PROGRAM grib2nc4

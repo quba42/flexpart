@@ -1,0 +1,49 @@
+fpname   | paramId | indofParam | discipline | category | number | typeSurf  | typeofLevel        | units     | shortName |   description      | gribVersion | center |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+---------+
+TT       |         |    11      |            |          |        |  100      |  isobaricInhPa     |    K      |    t      | Temperature        |     1      | kwbc   |
+UU       |         |    33      |            |          |        |  100      |  isobaricInhPa     | m s**-1   |    u      | U component of wind|     1      | kwbc   |
+VV       |         |    34      |            |          |        |  100      |  isobaricInhPa     | m s**-1   |    v      | V component of wind|     1      | kwbc   |
+RH       |         |    52      |            |          |        |  100      |  isobaricInhPa     |    %      |    r      | Relative humidity  |     1      | kwbc   |
+PS       |         |     1      |            |          |        |  1        |  surface           | Pa        |    sp     | Surface pressure   |     1      | kwbc   |
+WW       |         |    39      |            |          |        |  100      |  isobaricInhPa     | Pa s**-1  |    w      | Vertical velocity  |     1      | kwbc   |
+SD       |         |    65      |            |          |        |  1        |  surface           | kg m**-2  |   sf      | Snow Fall water equ|     1      | kwbc   |
+SLP      |         |     2      |            |          |        |  102      |  meanSea           | Pa        |   msl     | Mean sea lev. pres.|     1      | kwbc   |
+U10      |         |    33      |            |          |        |  105      |  heightAboveGround | m s**-1   |    10u    | 10 m u wind        |     1      | kwbc   |
+V10      |         |    34      |            |          |        |  105      |  heightAboveGround | m s**-1   |    10v    | 10 m v wind        |     1      | kwbc   |
+T2       |         |    11      |            |          |        |  105      |  heightAboveGround |    K      |    2t     | 2 metre temperature|     1      | kwbc   | 
+TCC      |         |    71      |            |          |        |  244      | Convec. cld layer  |    %      |    tcc    | Total cloud cover  |     1      | kwbc   |
+LSPREC   |         |            |     0      |    1     |   8    |   1       |  surface           | kg m**-2  |    tp     |    total precip.   |     2      | kwbc   |
+CONVPREC |         |            |     0      |    1     |   10   |   1       |  surface           | kg m**-2  |   acpcp   | convective precip. |     2      | kwbc   |
+ORO      |         |     7      |            |          |        |   1       |  surface           |    m      |   orog    | Orography          |     1      | kwbc   |
+LSM      |         |    81      |            |          |        |   1       |  surface           |  (0 - 1)  |   lsm     | Land-sea mask      |     1      | kwbc   |
+HMIX     |         |   221      |            |          |        |   1       |  surface           |    m      |   hpbl    | Planetary BLH      |     1      | kwbc   |
+RH2      |         |    52      |            |          |        |  105      |  heightAboveGround |    %      |    r      | Relative humidity  |     1      | kwbc   |
+TSIG1    |         |    11      |            |          |        |  107      |  sigma             |    K      |    t      | Temperature        |     1      | kwbc   |
+USIG1    |         |    33      |            |          |        |  107      |  sigma             | m s**-1   |    u      | U component of wind|     1      | kwbc   |
+VSIG1    |         |    34      |            |          |        |  107      |  sigma             | m s**-1   |    v      | V component of wind|     1      | kwbc   |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+--------+
+#
+#  Vtable for NCEP model-level data in GRIB1
+# typeSurf = typeOfFirstFixedSurface
+# indOfParam = indicatorOfParameter for GRIB1
+# typeofLeve for GRIB 1 is equivalent to indicatorOfTypeOfLevel
+# NOTES FOR DON:
+#   New variable RH was in ECMWF QH --- QH is obtained from RH in the readwind_gfs code
+# - SLP is read in initially to get params but it is in fact the MSL
+# - new variable HMIX -- mixing height
+# - new variables *SIG1 -- new variables used to calculate fluxes and stresses
+# - ETADOT is not existing, but there is the vertical velocity. I leave the same ETADOT FP name... or shall we call it WW? just a change in name
+
+#! There is no ParamId or infofParam from the GRIB files!!!  
+
+# RH in readwind_gfs.f90 code has number 1 but the GRIB files have it 0! I have checked with grib_dump
+# readwind_gfs.f90 tries to get the total cloud cover, but it is not in the GRIB data
+# NCEP data in our case_data does not have Total Cloud Cover! it tries to read it, but it is not in the files.  
+# ... we DO HAVE TCC in the data we get at ZAMG
+# precipitation is complex. I find only frozen precip fraciton in the files, but readwind, reads some parameters
+# ... that are tp and convprec if GRIB2!! our test data has no precipitation data. In the data we get at ZAMG
+# ... we DO HAVE total precipitation data and Convective precipitation!!! 
+# ... LSPREC is actually total precip .... but I insist, we do not have water precip in our case data!!
+# ALso at ZAMG we have relative and specific humidity! what does CTBTO have?
+# ALso funny, in readwind_gfs it says that td2 is calculated because it is not in GFS data
+# ... but we have it in the data and we do not have the relative humidity at 2 m

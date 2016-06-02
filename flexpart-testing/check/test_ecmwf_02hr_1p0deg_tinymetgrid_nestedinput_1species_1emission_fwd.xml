@@ -1,0 +1,72 @@
+ <distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Testing of Generic FLEXPART for small ECMWF problems with nested input
+    </short_descr>
+
+    <distropath>
+        ../../flexpart_code/
+    </distropath>
+
+    <parmodpath>
+        ../case_data/ecmwf_1p0deg_tinymet_nestedinput_multipletests/par_mod.f90
+    </parmodpath>
+
+    <execname>
+        FLEXPART_GFORTRAN
+    </execname>   
+
+    <!--Second met case: ECMWF global fields + European nest, nested output -->
+
+    <metcase>
+
+        <short_descr>
+            ECMWF global fields with European nest
+        </short_descr>
+
+        <metfiledir>
+            ../case_data/met_data/ecmwf/t1_33h_ec1p0d/
+        </metfiledir>
+
+        <metnestfiledir>
+            ../case_data/met_data/ecmwf/t1_33h_ec0p5d_nest/
+        </metnestfiledir>
+
+        <runcase>
+            <short_descr>
+                Forward run, 2 hours length, 1 species, 1 emissions, nestedinput
+            </short_descr>
+
+            <casedir>
+                ../case_data/ecmwf_1p0deg_tinymet_nestedinput_multipletests/case_ecmwf_02hr_1p0deg_tinymetgrid_nestedinput_1species_1emission_fwd/rundir_template
+            </casedir>
+
+            <controldatadir>
+                ../case_data/ecmwf_1p0deg_tinymet_nestedinput_multipletests/case_ecmwf_02hr_1p0deg_tinymetgrid_nestedinput_1species_1emission_fwd/control_output
+            </controldatadir>
+
+            <basictest>
+                <short_descr>
+                    Max error over entire temporal and spatial mother domain
+                </short_descr>
+
+                <type>
+                    mother_all_vars_maxabserr
+                </type>
+
+                <max_threshold>
+                   1.0E-3
+                </max_threshold>
+            </basictest>
+
+
+
+        </runcase>
+
+    </metcase>
+
+
+
+</distribution>

@@ -1,0 +1,62 @@
+<distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Testing of NCEP 1.0 deg GRIB1 global short fwd run
+    </short_descr>
+
+    <distropath>
+        ../../flexpart_code
+    </distropath>
+
+    <parmodpath>
+        ../case_data/ncep_06hr_1p0deg_grib1/case_ncep_02hr_1p0deg_grib1_1species_1emission_fwd/par_mod.F90
+    </parmodpath>
+
+    <execname>
+        FLEXPART_GFORTRAN
+    </execname>
+
+    <metcase>
+
+        <short_descr>
+            NCEP 1.0 deg GRIB1
+        </short_descr>
+
+        <metfiledir>
+            ../case_data/met_data/ncep/t1_06h_nc1p0d_grib1
+        </metfiledir>
+
+        <runcase>
+            <short_descr>
+                Forward run, 2 hours length, 1 species, 1 emissions, no nested outgrid
+            </short_descr>
+
+            <casedir>
+                ../case_data/ncep_06hr_1p0deg_grib1/case_ncep_02hr_1p0deg_grib1_1species_1emission_fwd/rundir_template
+            </casedir>
+
+            <controldatadir>
+                ../case_data/ncep_06hr_1p0deg_grib1/case_ncep_02hr_1p0deg_grib1_1species_1emission_fwd/control_output
+            </controldatadir>
+
+            <basictest>
+                <short_descr>
+                    Max error over entire temporal and spatial mother domain
+                </short_descr>
+
+                <type>
+                    mother_all_vars_maxabserr
+                </type>
+
+                <max_threshold>
+                   1.0E-3
+                </max_threshold>
+            </basictest>
+        </runcase>
+
+    </metcase>
+
+
+</distribution>

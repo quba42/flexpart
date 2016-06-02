@@ -1,0 +1,86 @@
+README-METDATA
+
+Don Morton, don.morton@borealscicomp.com
+Delia Arnold, deliona.arnold@gmail.com
+
+Last Update: 29 May 2016
+
+Our apologies, but the met data required for the testing environment is 
+not packaged with the FPv9.3 distribution.
+
+*****************************************************
+*** Note that the access to testing met data described below is tentative
+*** and temporary.  In the long-term we are eager to explore more 
+*** community-oriented approaches to making the data available.  At the
+*** time of creating the initial FPv9.3 distribution, the approach described
+*** below as the best we could do.
+*****************************************************
+
+The FLEXPART testing environment, located in the flexpart-testing directory
+of the FPv9.3 distribution, relies on a collection of ECMWF and NCEP GRIB
+files, as well as preprocessed binary "fp" files, all stored in 
+
+flexpart-testing/case_data/met_data
+
+This directory, in turn, currently has three subdirectories - ecmwf, 
+fp, and ncep.  The files currently take up about 1 GByte in space:
+
+----------------------------------------------
+morton@alaskawx:~/git/ctbto/flexpart-testing/case_data/met_data$ du -b
+47354866        ./ncep/t1_06h_nc1p0d_grib1
+38562575        ./ncep/t1_03h_nc1p0d
+85921537        ./ncep
+9351645 	./fp/fp_bwd_12h_ec1p0deg
+9351645 	./fp/fp_fwd_12h_ec1p0deg
+18707386        ./fp
+278984396       ./ecmwf/t1_03h_ec1p0d_grib1-2
+124711196       ./ecmwf/t1_03h_ec1p0d
+279022468       ./ecmwf/t1_03h_ec1p0d_grib2
+27653662        ./ecmwf/t1_33h_ec1p0d/t1_33h_ec1p0d
+43235155        ./ecmwf/t1_33h_ec1p0d
+42970420        ./ecmwf/t1_03h_ec0p5d_nest_v2
+27652936        ./ecmwf/t1_33h_ec0p5d_nest
+188129980       ./ecmwf/t1_03h_ec1p0d_v2
+984710647       ./ecmwf
+1089355954
+----------------------------------------------
+
+Although a solid testing environment should be self-contained and easy
+to use, we have decided not to pack these files with the FPv9.3 distribution 
+for two reasons
+
+1) 1+ GBytes of data makes the distribution huge, and this is especially
+apparent in a git environment where a clone of the distribution may take up
+to an hour just because of these files.  
+
+2) It is not currently permissible to distribute the ECMWF data.  
+
+Therefore, the distribution is provided with the empty subdirectories 
+ecmwf, fp and ncep, and it is up to the user to obtain the tar files of the
+data and unpack them.  The fp and ncep tar files are currently available at
+
+http://www.borealscicomp.com/CTBTO_FLEXPART/testenv/metdata/fp.tar.gz
+http://www.borealscicomp.com/CTBTO_FLEXPART/testenv/metdata/ncep.tar.gz
+
+They should be unpacked in  
+
+flexpart-testing/case_data/met_data 
+
+e.g.
+
+cd flexpart-testing/case_data/met_data
+tar xzvf fp.tar.gz
+tar xzvf ncep.tar.gz
+
+to create the fully-reconstitued testing environment (at least for FP and NCEP
+input data).
+
+The ECMWF test data is available by request (see contact info at top of this
+document), as file ecmwf.tar.gz.  Unfortunately, this is a bit more tricky
+because we need to adhere to ECMWF requirements and these are still being
+worked out.  Please contact the authors for help.
+
+In the longer term, it is our vision to automate the test environment in a
+way that met data will be automatically downloaded if it's not already present
+in your local distribution, but this is still a work-in-progress
+

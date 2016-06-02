@@ -1,0 +1,42 @@
+fpname   | paramId | indofParam | discipline | category | number | typeSurf  | typeofLevel        | units     | shortName |   description      | gribVersion | center |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+---------+
+TT       |         |            |     0      |    0     |    0   |  100      |  isobaricInhPa     |    k      |    t      | temperature        |     2      | kwbc   |
+UU       |         |            |     0      |    2     |    2   |  100      |  isobaricInhPa     | ms**-1    |    u      | u wind             |     2      | kwbc   |
+VV       |         |            |     0      |    2     |    3   |  100      |  isobaricInhPa     | ms**-1    |    v      | v wind             |     2      | kwbc   |
+RH       |         |            |     0      |    1     |    1   |  100      |  isobaricInhPa     |    %      |    r      | relative humidity  |     2      | kwbc   |
+PS       |         |            |     0      |    3     |    0   |  1        |  surface           | Pa        |    sp     | surface pressure   |     2      | kwbc   |
+WW       |         |            |     0      |    2     |    8   |  100      |  isobaricInhPa     | Pa s**-1  |    w      | vertical velocity  |     2      | kwbc   |
+SD       |         |            |     0      |    1     |   13   |  1        |  surface           | kg m-2    |  sdwe     | snow depth water eq|     2      | kwbc   |
+SLP      |         |            |     0      |    3     |    1   |  101      |  meanSea           | Pa        |  prmsl    | mean sea lev. pres.|     2      | kwbc   |
+U10      |         |            |     0      |    2     |    2   |  103      |  heightAboveGround | ms**-1    |    10u    | 10 m u wind        |     2      | kwbc   |
+V10      |         |            |     0      |    2     |    3   |  103      |  heightAboveGround | ms**-1    |    10u    | 10 m u wind        |     2      | kwbc   |
+T2       |         |            |     0      |    0     |    0   |  103      |  heightAboveGround |    k      |    2t     | 2m temperature     |     2      | kwbc   | 
+TD2      |         |            |     0      |    0     |    6   |  103      |  heightAboveGround |    k      |    2d     | 2m dew point       |     2      | kwbc   |
+TCC      |         |            |     0      |    6     |     1  |  244      |  Low cloud layer   |    %      |    tcc    | total cloud cover  |     2      | kwbc   |
+LSPREC   |         |            |     0      |    1     |   7    |   1       |  surface           | kg m**-2  |    tp     |    total precip.   |     2      | kwbc   |
+CONVPREC |         |            |     0      |    1     |   196  |   1       |  surface           | kg m**-2  |   acpcp   | convective precip. |     2      | kwbc   |
+ORO      |         |            |     0      |    3     |   5    |   1       |  surface           | gpm       |   orog    | orography/geopot   |     2      | kwbc   |
+LSM      |         |            |     2      |    0     |   0    |   1       |  surface           |  none     |   lsm     | land-sea mask      |     2      | kwbc   |
+HMIX     |         |            |     0      |    3     |   196  |   1       |  surface           |    m      |   hpbl    | mixing height      |     2      | kwbc   |
+RH2      |         |            |     0      |    1     |    1   |  103      |  heightAboveGround |    %      |    r      | relative humidity  |     2      | kwbc   |
+TSIG1    |         |            |     0      |    0     |    0   |  104      |  sigma             |    k      |    t      | temperature        |     2      | kwbc   |
+USIG1    |         |            |     0      |    2     |    2   |  104      |  sigma             | ms**-1    |    u      | u wind             |     2      | kwbc   |
+VSIG1    |         |            |     0      |    2     |    3   |  104      |  sigma             | ms**-1    |    v      | v wind             |     2      | kwbc   |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+--------+
+#
+#  This table constitutes the parameters that work for NCEP GRIB2 files available in the CTBTO operational
+#  data, as well as the NCEP FNL Operational Model Global Tropospheric Analyses, continuing from
+#  July 1999, available from http://rda.ucar.edu/datasets/ds083.2/
+#
+#  For the most part, parameters were chosen by looking through the codes used in readwind_gfs.f90,
+#  but cross-checking was done using some of the information available at the following sites:
+#
+#  * Fixed surface types and units -- http://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_table4-5.shtml
+#  * GRIB2 fields -- http://rda.ucar.edu/datasets/ds330.0/metadata/grib2.html
+#  * GRIB2, parameters for Discipline 2, Category 3 -- http://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_table4-2-0-3.shtml
+#
+#  Note that there is a bug in the FLEPXART v9.02 readwind_gfs.f90 which results in TCC not being
+#  read in correctly and, therefore, not affecting wet deposition.  This was reported (with a
+#  suggested fix) in Ticket #143 at flexpart.eu Trac ticketing system.
+#
+#

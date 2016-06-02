@@ -1,0 +1,79 @@
+<distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Testing of FLEXPART for very small ECMWF met file
+    </short_descr>
+
+    <distropath>
+        ../../flexpart_code
+    </distropath>
+
+    <parmodpath>
+        ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_06hr_1p0deg_tinymetgrid_1species_1emission_fwd/par_mod.F90
+    </parmodpath>
+
+    <execname>
+        FLEXPART_GFORTRAN
+    </execname>
+
+    <metcase>
+
+        <short_descr>
+            ECMWF patch - 11x11 1.0 degrees over Austria
+        </short_descr>
+
+        <metfiledir>
+            ../case_data/met_data/ecmwf/t1_33h_ec1p0d
+        </metfiledir>
+
+        <runcase>
+            <short_descr>
+                Forward run, 1 species, 1 emissions, 6 hours
+            </short_descr>
+
+            <casedir>
+                ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_06hr_1p0deg_tinymetgrid_1species_1emission_fwd/rundir_template
+            </casedir>
+
+            <controldatadir>
+                ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_06hr_1p0deg_tinymetgrid_1species_1emission_fwd/control_output
+            </controldatadir>
+
+
+            <basictest>
+                <short_descr>
+                    Max error over entire temporal and spatial mother domain
+                </short_descr>
+
+                <type>
+                    mother_all_vars_maxabserr
+                </type>
+
+                <max_threshold>
+                   1.0E-3
+                </max_threshold>
+            </basictest>
+
+            <basictest>
+                <short_descr>
+                    RMS error over entire temporal and spatial mother domain
+                </short_descr>
+
+                <type>
+                    mother_all_vars_rmse
+                </type>
+
+                <max_threshold>
+                   1.0E-3
+                </max_threshold>
+            </basictest>
+
+
+        </runcase>
+
+
+    </metcase>
+
+</distribution>

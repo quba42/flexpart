@@ -1,0 +1,33 @@
+fpname   | paramId | indofParam | discipline | category | number | typeSurf  | typeofLevel        | units     | shortName |   description      | gribVersion | center |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+---------+
+TT       |         |    130     |            |          |        |   109     |  ml                |    K      |    t      | Temperature        |     1      | ecmf   |
+UU       |         |    131     |            |          |        |   109     |  ml                | m s**-1   |    u      | U component of wind|     1      | ecmf   |
+VV       |         |    132     |            |          |        |   109     |  ml                | m s**-1   |    v      | V component of wind|     1      | ecmf   |
+QV       |         |    133     |            |          |        |   109     |  ml                | kg kg**-1 |    q      | Specific humidity  |     1      | ecmf   |
+PS       |         |    134     |            |          |        |     1     |  sfc               | Pa        |    sp     | Surface pressure   |     1      | ecmf   |
+ETADOT   |         |    135     |            |          |        |   109     |  ml                |Pa  s**-1  |    w      | Vertical velocity  |     1      | ecmf   |
+SD       |         |    141     |            |          |        |     1     |  sfc               | m of w equ|    sd     | Snow depth         |     1      | ecmf   |
+MSL      |         |    151     |            |          |        |     1     |  sfc               | Pa        |  msl      | Mean sea lev. pres.|     1      | ecmf   |
+TCC      |         |    164     |            |          |        |     1     |  sfc               | (0 - 1)   |  tcc      | Total cloud cover  |     1      | ecmf   |
+U10      |         |    165     |            |          |        |     1     |  sfc               | m s**-1   |    10u    | 10 m u wind        |     1      | ecmf   |
+V10      |         |    166     |            |          |        |     1     |  sfc               | m s**-1   |    10v    | 10 m v wind        |     1      | ecmf   |
+T2       |         |    167     |            |          |        |     1     |  sfc               |    K      |    2t     | 2m temperature     |     1      | ecmf   |  
+TD2      |         |    168     |            |          |        |     1     |  sfc               |    K      |    2d     | 2m dew point temp  |     1      | ecmf   |
+LSPREC   |         |    142     |            |          |        |     1     |  sfc               |    m      |    lsp    | Large scale precip.|     1      | ecmf   |
+CONVPREC |         |    143     |            |          |        |     1     |  sfc               |    m      |     cp    | Convective precip. |     1      | ecmf   |
+SHF      |         |    146     |            |          |        |     1     |  sfc               | J m**-2   |   sshf    | sensible heat flux |     1      | ecmf   |
+SR       |         |    176     |            |          |        |     1     |  sfc               | J m**-2   |   ssr     | solar radiation    |     1      | ecmf   |
+EWSS     |         |    180     |            |          |        |     1     |  sfc               |N m**-2 s  |   ewss    | EW turb surf stress|     1      | ecmf   |
+NSSS     |         |    181     |            |          |        |     1     |  sfc               |N m**-2 s  |   nsss    | NS turb surf stress|     1      | ecmf   |
+ORO      |         |    129     |            |          |        |     1     |  sfc               |m**2 s**-2 |    z      | Geopotential       |     1      | ecmf   |
+EXCESSORO|         |    160     |            |          |        |     1     |  sfc               |  none     |   sdor    | std dev of orog    |     1      | ecmf   |
+LSM      |         |    172     |            |          |        |     1     |  sfc               |  (0 - 1)  |   lsm     | Land-sea mask      |     1      | ecmf   |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+--------+
+#
+#  Vtable for ECMWF model-level data in GRIB1 from the MARS server.
+# typeSurf = indicatorOfTypeOfLevel
+# indOfParam = indicatorOfParameter for GRIB1
+# typeOfLevel for GRIB 1 is equivalent to indicatorOfTypeOfLevel
+# shortName: exactly as specified in GRIB1 file
+# description: Long name from GRIB1 file (in some cases abbreviated)
+# units: Exactly as specified in GRIB1 file

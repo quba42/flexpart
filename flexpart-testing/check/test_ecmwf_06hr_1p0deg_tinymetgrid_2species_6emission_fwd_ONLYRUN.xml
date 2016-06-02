@@ -1,0 +1,47 @@
+<distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Testing of Generic FLEXPART for small ECMWF problems.  This simply runs the case but does no testing
+    </short_descr>
+
+    <distropath>
+        ../../flexpart_code
+    </distropath>
+
+    <parmodpath>
+        ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_03hr_1p0deg_tinymetgrid_2species_6emission_nestedoutgrid_fwd/par_mod.F90
+    </parmodpath>
+
+    <execname>
+        FLEXPART_GFORTRAN
+    </execname>
+
+    <metcase>
+
+        <short_descr>
+            ECMWF patch
+        </short_descr>
+
+        <metfiledir>
+            ../case_data/met_data/ecmwf/t1_33h_ec1p0d/
+        </metfiledir>
+
+        <runcase>
+            <short_descr>
+                Forward run, 2 species, 6 emissions, nested outgrid
+            </short_descr>
+
+            <casedir>
+                ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_03hr_1p0deg_tinymetgrid_2species_6emission_nestedoutgrid_fwd/rundir_template
+            </casedir>
+
+            <controldatadir>
+                ../case_data/ecmwf_1p0deg_tinymet_multipletests/case_ecmwf_03hr_1p0deg_tinymetgrid_2species_6emission_nestedoutgrid_fwd/control_output
+            </controldatadir>
+        </runcase>
+
+    </metcase>
+
+</distribution>

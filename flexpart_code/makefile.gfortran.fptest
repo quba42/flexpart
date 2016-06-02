@@ -1,0 +1,154 @@
+###############################################################
+#
+# DJM 2015-09-17 
+# This is an evolving, experimental Makefile in which we explore
+# the incorporation of libraries - no change in the fundamental FLEXPART
+# code, just the use of libraries in compilation
+#
+###############################################################
+SHELL = /bin/bash
+MAIN = FLEXPART_GFORTRAN
+
+FC       = gfortran
+
+
+##############   Conditional compilation for testing  #################
+####  These are used for development and testing of .fp file functionality
+####  Hopefully they will be obsolete once WO4 is completed
+####
+####  For normal FLEXPART usage (no dumping or loading of .fp files), both
+####  of the DEFS should be commented out.
+####  
+####  Users should uncomment only one of the following.  They are mutually
+####  exclusive 
+####  
+####  Uncommenting GENFPFILESANDTEST will run FLEXPART normally, reading from
+####  met files, but every time a met file is processed, a .fp file with the 
+####  same basename will be created.  You will need to edit the destination
+####  of the .fp files, FPDIR, in getfields.F90
+
+#DEFS = -DGENFPFILESANDTEST 
+
+####
+####  Uncommenting TESTUSEGETFPFIELDS will cause FLEXPART to run from .fp files
+####  rather than met files.  The path to the .fp files, FPDIR, must be 
+####  hardcoded in
+####  FLEXPART.f90. 
+
+DEFS = -DTESTUSEGETFPFIELDS 
+
+#######################################################################
+
+INCPATH  = /opt/grib-api/include
+
+LIBPATH1 = /opt/grib-api/lib
+LIBPATH2 = /usr/lib/x86_64-linux-gnu
+FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH)
+LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -L./ -lmetio -lfputil -lgrib_api_f90 -lgrib_api -lm -ljasper
+
+METIO_LIB = libmetio.a
+FPUTIL_LIB = libfputil.a
+
+METIO_LIB_OBJS = fpmetbinary_mod.o getfields.o \
+fpgridcheck.o getfpfields.o \
+readwind.o readwind_gfs.o readwind_nests.o \
+calcpar.o calcpar_gfs.o calcpar_nests.o    \
+gridcheck_gfs.o \
+gridcheck.o \
+gridcheck_nests.o \
+verttransform.o verttransform_gfs.o verttransform_nests.o
+
+FPUTIL_LIB_OBJS = calcpv.o calcpv_nests.o caldate.o cmapf_mod.o \
+com_mod.o conv_mod.o ew.o flux_mod.o getrb.o getrc.o getvdep.o \
+getvdep_nests.o juldate.o shift_field_0.o obukhov.o obukhov_gfs.o \
+par_mod.o partdep.o pbl_profile.o psih.o psim.o qvsat.o raerod.o \
+richardson.o richardson_gfs.o scalev.o shift_field.o
+
+
+MODOBJS = \
+par_mod.o               com_mod.o \
+conv_mod.o              hanna_mod.o \
+interpol_mod.o          cmapf_mod.o \
+unc_mod.o               oh_mod.o \
+xmass_mod.o             flux_mod.o \
+point_mod.o             outg_mod.o \
+fpmetbinary_mod.o
+
+
+OBJECTS = \
+writeheader.o           assignland.o\
+part0.o \
+detectformat.o \
+coordtrafo.o            \
+drydepokernel.o         random.o \
+erf.o                   readavailable.o \
+readcommand.o \
+advance.o               readdepo.o \
+releaseparticles.o      \
+FLEXPART.o              readlanduse.o \
+getfields.o             init_domainfill.o\
+interpol_wind.o         readoutgrid.o \
+interpol_all.o          readpaths.o \
+readreceptors.o \
+readreleases.o \
+readspecies.o \
+interpol_misslev.o  \
+conccalc.o              \
+concoutput.o            \
+readOHfield.o\
+timemanager.o \
+interpol_vdep.o         interpol_rain.o \
+partoutput.o \
+hanna.o                 wetdepokernel.o \
+mean.o                  wetdepo.o \
+hanna_short.o           windalign.o \
+hanna1.o                initialize.o \
+interpol_all_nests.o \
+interpol_wind_nests.o   interpol_misslev_nests.o \
+interpol_vdep_nests.o   interpol_rain_nests.o \
+readageclasses.o        readpartpositions.o \
+calcfluxes.o            fluxoutput.o \
+skplin.o \
+convmix.o               calcmatrix.o \
+convmix_gfs.o		calcmatrix_gfs.o \
+convect43c.o               redist.o \
+sort2.o                 distance.o \
+centerofmass.o          plumetraj.o \
+openouttraj.o           \
+distance2.o \
+clustering.o            interpol_wind_short.o \
+interpol_wind_short_nests.o shift_field_0.o \
+outgrid_init.o \
+openreceptors.o         boundcond_domainfill.o\
+partoutput_short.o      readoutgrid_nest.o \
+outgrid_init_nest.o     writeheader_nest.o \
+concoutput_nest.o       wetdepokernel_nest.o \
+drydepokernel_nest.o    zenithangle.o \
+ohreaction.o            \
+initial_cond_calc.o     initial_cond_output.o \
+dynamic_viscosity.o     get_settling.o
+
+
+$(MAIN): $(MODOBJS) $(OBJECTS) $(METIO_LIB) $(FPUTIL_LIB)
+	$(FC) *.o -o $(MAIN) $(LDFLAGS)
+
+$(OBJECTS): $(MODOBJS)
+
+$(METIO_LIB): $(METIO_LIB_OBJS)
+	ar rcs $@ $^
+	rm $^
+
+$(FPUTIL_LIB): $(FPUTIL_LIB_OBJS)
+	ar rcs $@ $^
+	rm $^
+
+%.o: %.f90
+	$(FC) -c $(FFLAGS) $<
+
+%.o: %.F90
+	$(FC) -c $(FFLAGS) $(DEFS) $<
+
+clean:
+	rm *.o *.mod *.a
+
+

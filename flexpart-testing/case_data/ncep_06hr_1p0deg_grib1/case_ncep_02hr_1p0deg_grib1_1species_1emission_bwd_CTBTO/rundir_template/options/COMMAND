@@ -1,0 +1,32 @@
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
++++++++++++++ HEADER +++++++++++++++++
+-1
+20050514 000000
+20050514 020000
+  1800
+  1800
+   900
+ 9999999
+900   SYNC
+-5.0  CTL
+4     IFINE
+1     IOUT
+0     IPOUT
+1     LSUBGRID
+0     LCONVECTION
+0     LAGESPECTRA
+0     IPIN
+1     IOFR
+0     IFLUX
+0     MDOMAINFILL
+1     IND_SOURCE
+1     IND_RECEPTOR
+0     MQUASILAG
+0     NESTED_OUTPUT
+2     LINIT_COND        INITIAL COND. FOR BW RUNS: 0=NO,1=MASS UNIT,2=MASS MIXING RATIO UNIT
+0     PREPROCESSED_DATA

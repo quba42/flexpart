@@ -1,0 +1,56 @@
+fpname   | paramId | indofParam | discipline | category | number | typeSurf  | typeofLevel        | units     | shortName |   description      | gribVersion | center |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+---------+
+TT       |         |            |     0      |    0     |    0   |  105      |  hybrid            |    K      |    t      | Temperature        |     2      | ecmf   |
+UU       |         |            |     0      |    2     |    2   |  105      |  hybrid            | m s**-1   |    u      | U component of wind|     2      | ecmf   |
+VV       |         |            |     0      |    2     |    3   |  105      |  hybrid            | m s**-1   |    v      | V component of wind|     2      | ecmf   |
+QV       |         |            |     0      |    1     |    0   |  105      |  hybrid            | kg kg**-1 |    q      | Specific humidity  |     2      | ecmf   |
+PS       |         |    134     |            |          |        |     1     |  sfc               | Pa        |    sp     | Surface pressure   |     1      | ecmf   |
+PS       |         |            |     0      |    3     |    0   |  1        |  surface           | Pa        |    sp     | Surface pressure   |     2      | ecmf   |
+ETADOT   |         |            |     0      |    2     |   32   |  105      |  hybrid            |   s**-1   |  etadot   | Eta-coord vert vel |     2      | ecmf   |
+SD       |         |    141     |            |          |        |     1     |  sfc               | m of w equ|    sd     | Snow depth         |     1      | ecmf   |
+SD       |         |            |     0      |    1     |   11   |  1        |  surface           | m         |    sd     | Snow depth         |     2      | ecmf   |
+MSL      |         |    151     |            |          |        |     1     |  sfc               | Pa        |  msl      | Mean sea lev. pres.|     1      | ecmf   |
+MSL      |         |            |     0      |    3     |    0   |  101      |  mean Sea          | Pa        |  msl      | Mean sea lev. pres.|     2      | ecmf   |
+TCC      |         |    164     |            |          |        |     1     |  sfc               | (0 - 1)   |  tcc      | Total cloud cover  |     1      | ecmf   |
+TCC      |         |            |     192    |    128   |   164  |  1        |  surface           | (0 - 1)   |  tcc      | Total cloud cover  |     2      | ecmf   |
+U10      |         |    165     |            |          |        |     1     |  sfc               | m s**-1   |    10u    | 10 m u wind        |     1      | ecmf   |
+U10      |         |            |     0      |    2     |    2   |  103      |  heightAboveGround | m s**-1   |    10u    | 10 m U wind comp.  |     2      | ecmf   |
+V10      |         |    166     |            |          |        |     1     |  sfc               | m s**-1   |    10v    | 10 m v wind        |     1      | ecmf   |
+V10      |         |            |     0      |    2     |    3   |  103      |  heightAboveGround | m s**-1   |    10v    | 10 m V wind comp.  |     2      | ecmf   |
+T2       |         |    167     |            |          |        |     1     |  sfc               |    K      |    2t     | 2m temperature     |     1      | ecmf   |
+T2       |         |            |     0      |    0     |    0   |  103      |  heightAboveGround |    K      |    2t     | 2m temperature     |     2      | ecmf   |
+TD2      |         |    168     |            |          |        |     1     |  sfc               |    K      |    2d     | 2m dew point temp  |     1      | ecmf   |
+TD2      |         |            |     0      |    0     |    6   |  103      |  heightAboveGround |    K      |    2d     | 2m dewpoint temp   |     2      | ecmf   |
+LSPREC   |         |    142     |            |          |        |     1     |  sfc               |    m      |    lsp    | Large scale precip.|     1      | ecmf   |
+LSPREC   |         |            |     192    |    128   |   142  |   1       |  heightAboveGround |    m      |    lsp    | Large-scale precip.|     2      | ecmf   |
+CONVPREC |         |    143     |            |          |        |     1     |  sfc               |    m      |     cp    | Convective precip. |     1      | ecmf   |
+CONVPREC |         |            |     0      |    1     |   10   |   1       |  surface           | kg m**-2  |   acpcp   | Convective precip. |     2      | ecmf   |
+SHF      |         |    146     |            |          |        |     1     |  sfc               | J m**-2   |   sshf    | sensible heat flux |     1      | ecmf   |
+SHF      |         |            |     0      |    0     |   11   |   1       |  surface           | J m**-2   |   sshf    | Surf sens. heat flx|     2      | ecmf   |
+SR       |         |    176     |            |          |        |     1     |  sfc               | J m**-2   |   ssr     | solar radiation    |     1      | ecmf   |
+SR       |         |            |     0      |    4     |   9    |   1       |  surface           | J m**-2   |   ssr     | Surf net solar rad |     2      | ecmf   |
+EWSS     |         |    180     |            |          |        |     1     |  sfc               |N m**-2 s  |   ewss    | EW turb surf stress|     1      | ecmf   |
+EWSS     |         |            |     0      |    2     |   38   |   1       |  surface           | N m**-2 s |   ewss    | EW turb surf stress|     2      | ecmf   |
+NSSS     |         |    181     |            |          |        |     1     |  sfc               |N m**-2 s  |   nsss    | NS turb surf stress|     1      | ecmf   |
+NSSS     |         |            |     0      |    2     |   37   |   1       |  surface           | N m**-2 s |   nsss    | NS turb surf stress|     2      | ecmf   |
+ORO      |         |    129     |            |          |        |     1     |  sfc               |m**2 s**-2 |    z      | Geopotential       |     1      | ecmf   |
+ORO      |         |            |     0      |    3     |   4    |   1       |  surface           |    m      |    z      | Geopotential       |     2      | ecmf   |
+EXCESSORO|         |    160     |            |          |        |     1     |  sfc               |  none     |   sdor    | std dev of orog    |     1      | ecmf   |
+EXCESSORO|         |            |   192      |    128   |   160  |   1       |  surface           |  none     |   sdor    | Stddev orography   |     2      | ecmf   |
+LSM      |         |    172     |            |          |        |     1     |  sfc               |  (0 - 1)  |   lsm     | Land-sea mask      |     1      | ecmf   |
+LSM      |         |            |     2      |    0     |   0    |   1       |  surface           | (0 - 1)   |   lsm     | Land-sea mask      |     2      | ecmf   |
+---------+---------+------------+------------+----------+--------+-----------+--------------------+-----------+-----------+--------------------+------------+--------+
+#
+#  Vtable for ECMWF model-level data in GRIB1/GRIB2 hybrid from the MARS server.
+#
+### GRIB1
+# typeSurf = indicatorOfTypeOfLevel
+# indOfParam = indicatorOfParameter for GRIB1
+# typeOfLevel for GRIB 1 is equivalent to indicatorOfTypeOfLevel
+# shortName: exactly as specified in GRIB1 file
+# description: Long name from GRIB1 file (in some cases abbreviated)
+# units: Exactly as specified in GRIB1 file
+### GRIB2
+# typeSurf = typeOfFirstFixedSurface
+# indOfParam = indicatorOfParameter for GRIB1
+# typeofLeve for GRIB 1 is equivalent to indicatorOfTypeOfLevel

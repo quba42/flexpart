@@ -1,0 +1,31 @@
+
+Quick notes for generation of doxygenated FLEXPART code.
+
+Don Morton, Don.Morton@borealscicomp.com
+
+------------------------------------------------
+
+This assumes you have a pretty full Doxygen installation, which may take
+a little effort to set up.
+
+In general, you need to have a "flexdoc" configuration file and, if it's 
+properly set up, all you need to do is
+
+doxygen flexdoc
+
+and the whole documentation tree will end up in a new "html" directory.
+It actually produces a "latex" directory, too, but I've chosen not to keep
+that.
+
+In this directory, I've placed a flexdoc configuration file that's set up
+perfectly.  The two things you would most likely want to change would be
+
+PROJECT_NAME
+
+and
+
+INPUT
+
+I have also found that if you already have an "html" directory, it may 
+contain some old stuff when you're done, so it's best to just remove it
+and start fresh.

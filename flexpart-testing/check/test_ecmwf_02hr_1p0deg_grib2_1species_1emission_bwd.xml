@@ -1,0 +1,63 @@
+<distribution>
+
+    <!-- Sample XML testing namelist -->
+
+    <short_descr>
+        Testing of Leo's GRIB2 data for small ECMWF 1.0 deg global *WITH VTABLES*
+    </short_descr>
+
+    <distropath>
+        ../../flexpart_code
+    </distropath>
+
+    <parmodpath>
+        ../case_data/ecmwf_02hr_1p0deg_grib2/case_ecmwf_02hr_1p0deg_grib2_1species_1emission_bwd/par_mod.F90
+    </parmodpath>
+
+    <execname>
+        FLEXPART_GFORTRAN
+    </execname>
+
+    <metcase>
+
+        <short_descr>
+            ECMWF global fields
+        </short_descr>
+
+        <metfiledir>
+            ../case_data/met_data/ecmwf/t1_03h_ec1p0d_grib2/
+        </metfiledir>
+
+        <runcase>
+            <short_descr>
+                Backward run, 2 hours length, 1 species, 1 emissions, no nested outgrid
+            </short_descr>
+
+            <casedir>
+                ../case_data/ecmwf_02hr_1p0deg_grib2/case_ecmwf_02hr_1p0deg_grib2_1species_1emission_bwd/rundir_template
+            </casedir>
+
+            <controldatadir>
+                ../case_data/ecmwf_02hr_1p0deg_grib2/case_ecmwf_02hr_1p0deg_grib2_1species_1emission_bwd/control_output
+            </controldatadir>
+
+
+            <basictest>
+                <short_descr>
+                    Max error over entire temporal and spatial mother domain
+                </short_descr>
+
+                <type>
+                    mother_all_vars_maxabserr
+                </type>
+
+                <max_threshold>
+                   1.0E-3
+                </max_threshold>
+            </basictest>
+
+        </runcase>
+
+    </metcase>
+
+</distribution>
