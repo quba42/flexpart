@@ -25,7 +25,9 @@ MODULE fp2nc4io_mod
     PRIVATE DEFAULT_DEFLATE_LEVEL
 
     ! These are valid variable names for the user of this module to reference
-    CHARACTER, DIMENSION(*), PARAMETER :: VALID_VARS = &
+    !!!  DJM - 2016-06-13 -- added specific value in DIMENSION statement.
+    !!!                      can't be "*" in some Fortran versions
+    CHARACTER, DIMENSION(10), PARAMETER :: VALID_VARS = &
 &           (/ 't', 'u', 'v', 'w', 'q',                &
 &              'T', 'U', 'V', 'W', 'Q' /)
     PRIVATE VALID_VARS

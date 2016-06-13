@@ -7,8 +7,10 @@ FC = gfortran
 FLEXPART_SRC = ..
 
 GRIBAPI = /opt/grib-api
+HDF5 = /opt/hdf5-1.8.16
 NETCDFF = /opt/netcdf-fortran-4.4.3
 NETCDF = /opt/netcdf-c-4.4.0
+
 
 
 
@@ -31,8 +33,14 @@ FFLAGS = -mcmodel=medium
 INCLUDES_NETCDF = -I${NETCDFF}/include
 INCLUDES = -I${GRIBAPI}/include ${INCLUDES_NETCDF}
 
-LDFLAGS_NETCDF = -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf 
-LDFLAGS = -L${GRIBAPI}/lib -lgrib_api_f90 -lgrib_api ${LDFLAGS_NETCDF}
+
+### NetCDF link flags - use the first one for dynamic libs, the second
+### one for static libs
+#LDFLAGS_NETCDF = -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf 
+LDFLAGS_NETCDF=-static -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf -lnetcdf -L${HDF5}/lib -lhdf5_fortran -lhdf5_hl -lhdf5hl_fortran -lhdf5 -ldl -lz
+
+
+LDFLAGS = -L${GRIBAPI}/lib -lgrib_api_f90 -lgrib_api ${LDFLAGS_NETCDF} -ljasper
 
 
 #------------ Creating the binary ------------------
@@ -49,7 +57,7 @@ fp2nc4io_mod.mod : ${FPMODOBJS}
 #-----------  Entries for testing ----------------
 test : clean_test test/${BINARY}_test
 	mv ${BINARY}_test test/
-	(cd test; export LD_LIBRARY_PATH=${NETCDFF}/lib:${NETCDF}/lib:${LD_LIBRARY_PATH}; ./${BINARY}_test EL14091912 testout.nc4 w q)
+	(cd test; export LD_LIBRARY_PATH=${NETCDFF}/lib:${NETCDF}/lib:${GRIBAPI}/lib:${LD_LIBRARY_PATH}; ./${BINARY}_test EL14091912 testout.nc4 w q)
 
 test/${BINARY}_test : ${BINARY}_test.o fp2nc4io_mod.o ${FLXPRTOBJS} ${FPMODOBJS} ${OBJS} 
 	${FC} -o ${BINARY}_test ${BINARY}_test.o fp2nc4io_mod.o ${FLXPRTOBJS} ${FPMODOBJS} ${OBJS} ${LDFLAGS}
