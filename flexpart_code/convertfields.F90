@@ -138,9 +138,9 @@ subroutine convertfields(ind,metdata_format,dumpPath)
           filename = wfname(ind)(lastSlash+1:len(wfname(ind)))
        
           if ( ldirect.eq.1 ) then
-              fpfname = TRIM(filename) // '_fwd.fp'
+              fpfname = TRIM(filename) 
           else
-              fpfname = TRIM(filename) // '_bwd.fp'
+              fpfname = TRIM(filename)
           endif
           print *, 'writing ',  TRIM(dumpPath) // '/' //  TRIM(fpfname)
 

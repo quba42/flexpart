@@ -56,7 +56,12 @@ program grib2flexpart
 
   ! Print the GPL License statement
   !*******************************************************
+#if defined CTBTO
+  print*,'Welcome to GRIB2FLEXPART Version 1.0 CTBTO'
+#else
   print*,'Welcome to GRIB2FLEXPART Version 1.0'
+#endif
+
   print*,'FLEXPART is free software released under the GNU Genera'// &
        'l Public License.'
 

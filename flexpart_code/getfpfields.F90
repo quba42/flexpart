@@ -119,9 +119,9 @@ subroutine getfpfields(itime,nstop,metdata_format)
 #endif
            ! Read in a single .fp file, placing contents at index 2
            if ( ldirect.eq.1 ) then 
-             fpfname = TRIM(path(3)) // TRIM(wfname(indj+1)) // '_fwd.fp'
+             fpfname = TRIM(path(3)) // TRIM(wfname(indj+1))
            else
-             fpfname = TRIM(path(3)) // TRIM(wfname(indj+1)) // '_bwd.fp'
+             fpfname = TRIM(path(3)) // TRIM(wfname(indj+1))
            endif
            print *, 'loading... ',  TRIM(fpfname)
            CALL fpmetbinary_load(TRIM(fpfname), memind(2)) 
@@ -157,9 +157,9 @@ subroutine getfpfields(itime,nstop,metdata_format)
 #endif
             ! Read in first .fp file
             if ( ldirect.eq.1 ) then
-              fpfname = TRIM(path(3)) // TRIM(wfname(indj)) // '_fwd.fp'
+              fpfname = TRIM(path(3)) // TRIM(wfname(indj))
             else
-              fpfname = TRIM(path(3)) // TRIM(wfname(indj)) // '_bwd.fp'
+              fpfname = TRIM(path(3)) // TRIM(wfname(indj))
             endif
             print *, 'loading... ',  TRIM(fpfname)
             CALL fpmetbinary_load(TRIM(fpfname), memind(1)) 
@@ -176,9 +176,9 @@ subroutine getfpfields(itime,nstop,metdata_format)
 #endif
             ! Read in second .fp file
             if ( ldirect.eq.1 ) then
-              fpfname = TRIM(path(3)) // TRIM(wfname(indj+1)) // '_fwd.fp'
+              fpfname = TRIM(path(3)) // TRIM(wfname(indj+1))
             else
-              fpfname = TRIM(path(3)) // TRIM(wfname(indj+1)) // '_bwd.fp'
+              fpfname = TRIM(path(3)) // TRIM(wfname(indj+1))
             endif
             print *, 'loading... ',  TRIM(fpfname)
             CALL fpmetbinary_load(TRIM(fpfname), memind(2)) 

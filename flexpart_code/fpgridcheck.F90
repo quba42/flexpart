@@ -28,9 +28,9 @@ subroutine fpgridcheck
   do i=1,numbwf
     if ( ifn.eq.0 ) then
       if ( ldirect.eq.1 ) then
-        inquire(file=TRIM(path(3)) // TRIM(wfname(i)) // '_fwd.fp', exist=exists)
+        inquire(file=TRIM(path(3)) // TRIM(wfname(i)), exist=exists)
       else
-        inquire(file=TRIM(path(3)) // TRIM(wfname(i)) // '_bwd.fp', exist=exists)
+        inquire(file=TRIM(path(3)) // TRIM(wfname(i)), exist=exists)
       endif
       if ( exists ) then
         ifn = i
@@ -40,9 +40,9 @@ subroutine fpgridcheck
   
   ! Create the file name and load her up
   if ( ldirect.eq.1 ) then
-    fpfname = TRIM(path(3)) // TRIM(wfname(ifn)) // '_fwd.fp'
+    fpfname = TRIM(path(3)) // TRIM(wfname(ifn))
   else
-    fpfname = TRIM(path(3)) // TRIM(wfname(ifn)) // '_bwd.fp'
+    fpfname = TRIM(path(3)) // TRIM(wfname(ifn))
   endif
   print *, 'fpgridcheck(): LOADING.... ',  TRIM(fpfname)
 
