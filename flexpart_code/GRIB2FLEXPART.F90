@@ -53,6 +53,7 @@ program grib2flexpart
   character(len=512) :: nestedFileName
   character(len=32) :: lsubgridTXT
   integer :: useAvailable = 0
+  integer :: overwritecheck
 
   ! Print the GPL License statement
   !*******************************************************
@@ -114,8 +115,22 @@ program grib2flexpart
       numbwf = i - 4 + 1
       if ( ldirect.eq.1 ) then
         wfname(i-4+1) = inputFileName
+        if ( overwritecheck( dumpPath, wfname(i-4+1), 0) == -1 ) then
+          ! if the output and input directory is the same, exit with error
+          print *, "Input and output paths must be different"
+          print *, "Output: "//trim(dumpPath)
+          print *, "input: "//trim(wfname(i-4+1))
+          stop 'Error: Incorrect arguments'
+        endif
       else
         wfname(iargc()+1-i) = inputFileName
+        if ( overwritecheck( dumpPath, wfname(iargc()+1-i), 0) == -1 ) then
+          ! if the output and input directory is the same, exit with error
+          print *, "Input and output paths must be different"
+          print *, "Output: "//trim(dumpPath)
+          print *, "Input: "//trim(wfname(iargc()+1-i))
+          stop 'Error: Incorrect arguments'
+        endif
       endif
     end do
 
@@ -127,7 +142,17 @@ program grib2flexpart
     call readcommand
 
     call readavailable
+    do i=1,numbwf 
+      if ( overwritecheck( dumpPath, path(3)(1:length(3)) // trim(wfname(i)),0) == -1) then
+          ! if the output and input directory is the same, exit with error
+          print *, "Input and output paths must be different"
+          print *, "Output: "//trim(dumpPath)
+          print *, "Input: "//path(3)(1:length(3)) // trim(wfname(i))
+          stop 'Error: Incorrect arguments'
+        endif
+    enddo
   endif
+
 
 ! Reset the times of the wind fields that are kept in memory to no time
  !**********************************************************************
@@ -175,3 +200,45 @@ program grib2flexpart
        &XPART PREPROCESSING RUN!'
 
 end program grib2flexpart
+
+! This function checks whether input and output directories differ
+! It does so by creating tmp file in output directory and by checking for its presence in input one
+! It's does this way to avoid the need for relative 2 absolute path expansion and to avoid handling of links
+integer function overwritecheck( dump_path, input_path, input_is_path )
+  character(len=*) :: dump_path, input_path
+  integer :: input_is_path, open_status
+  character(len=512) :: tmp_file_name, tmp_file_path, check_file_path
+  character(len=64) :: pid, current_time
+  logical :: exists
+
+  overwritecheck = 1
+
+  write (pid,*) getpid()
+  write (current_time, *) time()
+  ! generate tmp file name using PID and timestamp
+  tmp_file_name = "overwritecheck_"//trim(adjustl(pid))//"_"//trim(adjustl(current_time))//".tmp"
+  tmp_file_path = trim(dump_path)//"/"//trim(tmp_file_name)
+
+  ! create tmp file in output directory
+  open(10001, file=trim(tmp_file_path), status="new", action="write", iostat=open_status)
+  ! check for tmp file
+  if ( open_status /= 0 ) then
+    print *, "Output directory does not exist or is not writeable"
+    stop 'Error: Incorrect arguments'
+  endif
+    
+  ! generate tmp file name in input directory
+  if ( input_is_path == 1) then
+    check_file_path = trim(input_path)//"/"//trim(tmp_file_name)
+  else
+    check_file_path=trim(input_path(:scan(input_path, '/', .TRUE.)))//trim(tmp_file_name)
+  endif
+  !check for file presence
+  inquire(file=TRIM(check_file_path), exist=exists)
+  ! delete tmp file
+  close(10001, status='DELETE')
+  if ( exists ) then
+    overwritecheck = -1
+  endif
+  
+end function
