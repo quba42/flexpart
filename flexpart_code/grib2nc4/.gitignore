@@ -1,3 +1,3 @@
 *.o
 *.mod
-grib2netcdf4
+grib2nc4
