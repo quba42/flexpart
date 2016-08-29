@@ -107,7 +107,7 @@ def main():
     for xml_case in LIST_OF_XML_FILES:
         print '\n EXECUTING TEST : ', xml_case, '\n'
         if cmdline_makefile_path != None:
-            process=subprocess.Popen(['./check-v3.py','-m', cmdline_makefile_path,  xml_case ],
+            process=subprocess.Popen(['./check.py','-m', cmdline_makefile_path,  xml_case ],
                                       stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             # print the output of the process
             for line in process.stdout:
@@ -132,9 +132,9 @@ def main():
                 sys.stderr.write(line)
             
             # using os.system it works and the stfout and stderr is output on the fly.
-            #os.system('./check-v3.py -m '+cmdline_makefile_path+' '+xml_case)
+            #os.system('./check.py -m '+cmdline_makefile_path+' '+xml_case)
 
-        else: # I leave this ready in case check-v3.py ever supports back to use a default makefile
+        else: # I leave this ready in case check.py ever supports back to use a default makefile
             print INFO, ' No path to makefile was specified, run again the script'
             print SPACES, '  with -m path/makefile option'
 
