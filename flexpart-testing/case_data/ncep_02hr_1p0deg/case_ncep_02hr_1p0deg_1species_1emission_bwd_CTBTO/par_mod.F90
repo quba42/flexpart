@@ -202,7 +202,7 @@ module par_mod
   ! Maximum number of particles, species, and similar
   !**************************************************
 
-#if defined WITH_CTBTO_PATCHES
+#if defined CTBTO
   integer,parameter :: maxpart=30000000
   integer,parameter :: maxspec=1
 #else
