@@ -1,18 +1,23 @@
 SHELL = /bin/bash
-FLEXPART_EXECUTABLE = FLEXPART_GFORTRAN
-GRIB2FLEXPART_EXECUTABLE = GRIB2FLEXPART_GFORTRAN
+FLEXPART_EXECUTABLE = flexpart_ifort   
+GRIB2FLEXPART_EXECUTABLE = grib2flexpart_ifort
 
 #############################################
-#### Uncomment this to activate performance timing
-#DEFS = -DPERFTIMER -DCTBTO
-DEFS = -DPERFTIMER
+DEFS = -DCTBTO
 #############################################
 
-FC       = gfortran
-INCPATH  = /opt/grib-api/include
-LIBPATH1 = /opt/grib-api/lib
-LIBPATH2 = /usr/lib/x86_64-linux-gnu
-FFLAGS   =   -O2 -m64 -mcmodel=medium -fcheck=all -fconvert=little-endian -frecord-marker=4 -I$(INCPATH) 
+# Set up for devlan ifort
+INTEL_ROOT = /cots/intel/composer_xe_2013.2.146
+GRIB_API_ROOT = /dvl/atm/klinkl/tmp/ifort_grib_api/grib_api-1.12.3
+
+FC       = $(INTEL_ROOT)/bin/ifort
+
+INCPATH = $(GRIB_API_ROOT)/fortran
+LIBPATH1 = $(GRIB_API_ROOT)/fortran/.libs
+LIBPATH2 = $(GRIB_API_ROOT)/src/.libs
+
+
+FFLAGS   =   -O2 -mcmodel=medium -convert little_endian -I$(INCPATH) 
 
 LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -lgrib_api_f90 -lgrib_api -lm -ljasper
 

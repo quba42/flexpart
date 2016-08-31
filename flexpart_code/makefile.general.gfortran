@@ -1,11 +1,30 @@
 SHELL = /bin/bash
-MAIN = FLEXPART_IFORT
+FLEXPART_EXECUTABLE = FLEXPART_GFORTRAN
+GRIB2FLEXPART_EXECUTABLE = GRIB2FLEXPART_GFORTRAN
 
-FC       = ifort
-INCPATH  = /usr/local/grib-api/include
-LIBPATH1 = /usr/local/grib-api/lib
+#############################################
+#### Uncomment this to activate performance timing
+#DEFS = -DPERFTIMER -DCTBTO
+#DEFS = -DPERFTIMER
+# DEFS = -DCTBTO
+DEFS = 
+#############################################
+
+FC       = gfortran
+
+# devlan
+INCPATH  = /dvl/atm/software/local/include
+LIBPATH1 = /dvl/atm/software/usr/lib
 LIBPATH2 = /usr/lib/x86_64-linux-gnu
-FFLAGS   = -g -O2 -mcmodel=medium -shared-intel -convert little_endian -I$(INCPATH)
+
+
+# alaskawx
+#INCPATH  = /opt/grib-api/include
+#LIBPATH1 = /opt/grib-api/lib
+#LIBPATH2 = /usr/lib/x86_64-linux-gnu
+
+FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH) 
+
 LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -lgrib_api_f90 -lgrib_api -lm -ljasper
 
 
@@ -16,11 +35,11 @@ interpol_mod.o          cmapf_mod.o \
 unc_mod.o               oh_mod.o \
 xmass_mod.o             flux_mod.o \
 point_mod.o             outg_mod.o \
-fpmetbinary_mod.o
+fpmetbinary_mod.o	class_vtable_mod.o
 
 
 OBJECTS = \
-grib2check.o 		fpgricheck.o \
+grib2check.o 		fpgridcheck.o \
 writeheader.o           assignland.o\
 calcpar.o               part0.o \
 calcpar_gfs.o 		detectformat.o \
@@ -81,7 +100,6 @@ ohreaction.o            getvdep_nests.o \
 initial_cond_calc.o     initial_cond_output.o \
 dynamic_viscosity.o     get_settling.o
 
-
 all: $(FLEXPART_EXECUTABLE) $(GRIB2FLEXPART_EXECUTABLE)
 
 flexpart: $(FLEXPART_EXECUTABLE)
@@ -104,7 +122,8 @@ GRIB2FLEXPART.o: $(MODOBJS)
 	$(FC) -c $(FFLAGS) $<
 
 %.o: %.F90
-	$(FC) -c $(FFLAGS) $<
+	$(FC) -c $(FFLAGS) $(DEFS) $<
+
 
 clean:
 	rm -f *.o *.mod
