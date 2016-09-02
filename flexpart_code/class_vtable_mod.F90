@@ -187,9 +187,9 @@ contains
 
         ! Allocate array for storing the vtable records, and store
         ! num_entries
-        print *, 'Ready to allocate the_vtable_data'
+        !print *, 'Ready to allocate the_vtable_data'
         allocate(the_vtable_data%the_entries(num_vrecs))
-        print *, 'Allocated the_vtable_data'
+        !print *, 'Allocated the_vtable_data'
         the_vtable_data%num_entries = num_vrecs
 
         ! Read, parse and store the vtable records

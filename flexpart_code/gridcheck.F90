@@ -154,11 +154,11 @@ subroutine gridcheck_ecmwf
     !!!!!!!!!!!!!!!!!!!  VTABLE code
     !!!!!!! Vtable choice
     gribfile_name = path(3)(1:length(3))//trim(wfname(ifn))
-    print *, 'gribfile_name: ', gribfile_name
+    !print *, 'gribfile_name: ', gribfile_name
 
     gribfile_type = vtable_detect_gribfile_type( gribfile_name )
 
-    print *, 'gribfile_type: ', gribfile_type
+    !print *, 'gribfile_type: ', gribfile_type
 
     if (gribfile_type .eq. VTABLE_GRIBFILE_TYPE_ECMWF_GRIB1) then
         vtable_path = VTABLE_ECMWF_GRIB1_PATH
@@ -173,10 +173,10 @@ subroutine gridcheck_ecmwf
 
 
     ! Load the Vtable into 'my_vtable'
-    print *, 'Loading Vtable: ', vtable_path
+    !print *, 'Loading Vtable: ', vtable_path
     call vtable_load_by_name(vtable_path, my_vtable)
-    print *, 'Vtable Initialized: ', my_vtable%initialized
-    print *, 'Vtable num_entries: ', my_vtable%num_entries
+    !print *, 'Vtable Initialized: ', my_vtable%initialized
+    !print *, 'Vtable num_entries: ', my_vtable%num_entries
     !!!!!!!!!!!!!!!!!!!  VTABLE code
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
