@@ -129,7 +129,7 @@ module par_mod
 
   !integer,parameter :: nxmax=361,nymax=181,nuvzmax=92,nwzmax=92,nzmax=92
   !integer,parameter :: nxmax=361,nymax=181,nuvzmax=61,nwzmax=61,nzmax=61
-  integer,parameter :: nxmax=721,nymax=361,nuvzmax=140,nwzmax=140,nzmax=140
+  integer,parameter :: nxmax=721,nymax=361,nuvzmax=138,nwzmax=138,nzmax=138
   !integer,parameter :: nxshift=359  ! for ECMWF
   integer,parameter :: nxshift=0     ! for GFS
 
