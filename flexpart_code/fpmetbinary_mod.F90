@@ -30,6 +30,7 @@ MODULE fpmetbinary_mod
 
     USE com_mod
     USE conv_mod
+    USE par_mod, ONLY : nxmax, nymax, nzmax, nuvzmax, nwzmax
 
     IMPLICIT NONE
 
@@ -247,9 +248,20 @@ CONTAINS
         INTEGER, INTENT(IN) :: cm_index           ! Index of last dimension in
                                                   ! most com_mod variables.
                                                   ! Should be 1 or 2 
+
+        ! These are temporary variables, used in the LOAD option, for 
+        ! comparing against the current values in FLEXPART of nxmax, nymax, ...
+        INTEGER :: temp_nxmax, temp_nymax, temp_nzmax, &
+&                  temp_nuvzmax, temp_nwzmax
+
         CHARACTER(LEN=128) :: errmesg
 
         if (op == 'DUMP') THEN
+
+            ! Write the compiled max dimensions from par_mod - these are
+            ! not meant to be reassigned during a LOAD, but used as "header"
+            ! information to provide the structure of arrays
+            WRITE (iounit) nxmax, nymax, nzmax, nuvzmax, nwzmax
 
             ! Scalar values
             WRITE(iounit) nx, ny, nxmin1, nymin1, nxfield
@@ -388,6 +400,33 @@ CONTAINS
             WRITE(iounit) nconvlev, nconvtop
 
         ELSE IF (op == 'LOAD') THEN 
+
+            ! Read the compiled max dimensions that were dumped from par_mod 
+            ! when creating the fp file, so that we can compare against
+            ! current FLEXPART dimensions - they need to be the same, or else
+            ! we abort.
+            READ (iounit) temp_nxmax, temp_nymax, temp_nzmax, &
+&                         temp_nuvzmax, temp_nwzmax
+
+
+            IF ( (temp_nxmax == nxmax) .AND. (temp_nymax == nymax) .AND. &
+&                   (temp_nzmax == nzmax) .AND. &
+&                   (temp_nuvzmax == nuvzmax) .AND. &
+&                   (temp_nwzmax == nwzmax) ) THEN
+                CONTINUE
+            ELSE
+                PRINT *, 'Incompatible dimensions between fp file and current FLEXPART!'
+                PRINT *, ''
+                PRINT *, '                  FP file     Compiled FP'
+                PRINT *, 'nxmax:     ', temp_nxmax, '    ', nxmax 
+                PRINT *, 'nymax:     ', temp_nymax, '    ', nymax 
+                PRINT *, 'nzmax:     ', temp_nzmax, '    ', nzmax 
+                PRINT *, 'nuvzmax:     ', temp_nuvzmax, '    ', nuvzmax 
+                PRINT *, 'nwzmax:     ', temp_nwzmax, '    ', nwzmax 
+                PRINT *, ''
+                STOP
+            END IF
+
 
             ! Scalar values
             READ(iounit) nx, ny, nxmin1, nymin1, nxfield
