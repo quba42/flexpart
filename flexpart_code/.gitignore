@@ -2,3 +2,5 @@
 *.mod
 FLEXPART_GFORTRAN
 GRIB2FLEXPART_GFORTRAN
+flexpart_ifort
+grib2flexpart_ifort

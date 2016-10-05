@@ -7,12 +7,7 @@ MODULE fpmetbinary_mod
   !     Authors Don Morton (Don.Morton@borealscicomp.com)                      *
   !             Delia Arnold (deliona.arnold@gmail.com)                        *
   !                                                                            *
-  !     15 Sep 2015                                                            *
-  !                                                                            *
-  !     Currently, the only data being dumped and loaded has data structures   *
-  !     defined in com_mod.f90.  In the future, perhaps it will be necessary   *
-  !     to use data structures from other parts of the FLEXPART code system.   *
-  !                                                                            *
+  !     07 Oct 2016                                                            *
   !                                                                            *
   !     Most of the data structures from com_mod.f90 that are dumped and       *
   !     loaded have a final dimension of size two, so that they may hold data  *
@@ -26,6 +21,24 @@ MODULE fpmetbinary_mod
   !     happens if a read or write fails in any way.  Right now, it's crash    *
   !     city.                                                                  *
   !                                                                            *
+  !     Recent enhancements (07 Oct 2016) DJM:                                 *
+  !                                                                            *
+  !     - file format changed so that compiled dimensions are output, and      *
+  !       during input these same dimensions are compared with the dimensions  *
+  !       compiled into the flexpart that is reading it.  A discrepancy        *
+  !       causes abort, so that time isn't wasted reading an incompatible      *
+  !       file.                                                                *
+  !                                                                            *
+  !     - file format changed so that first item is an 8-character string      *
+  !       depicting the version of the preprocessed file format.               *
+  !       An inconsistency between a detected and expected string results      *
+  !       in program abort.                                                    *
+  !                                                                            *
+  !       *** IMPORTANT *** - when the format of the preprocessed output is    *
+  !       modified in any way, be sure to change the version string below,     *
+  !       PREPROC_FORMAT_VERSION_STR, so that attempts to read the output      *
+  !       with a different format version will cause an abort.                 *
+  !                                                                            *
   !*****************************************************************************
 
     USE com_mod
@@ -38,7 +51,14 @@ MODULE fpmetbinary_mod
     ! of code
     INTEGER, PARAMETER :: IOUNIT_DUMP = 33, IOUNIT_LOAD = 34, &
                           IOUNIT_TEXTOUT = 35
-    PRIVATE IOUNIT_DUMP, IOUNIT_LOAD, IOUNIT_TEXTOUT, fpio
+
+    ! When a change is made to the format of the preprocessed file, such that
+    ! this routine will not be able to read a previous version, this version
+    ! string should be modified
+    CHARACTER(LEN=8), PARAMETER :: PREPROC_FORMAT_VERSION_STR = '9.3.1e  '
+
+    PRIVATE IOUNIT_DUMP, IOUNIT_LOAD, IOUNIT_TEXTOUT, fpio,    &
+&           PREPROC_FORMAT_VERSION_STR
 
 
 CONTAINS
@@ -254,9 +274,15 @@ CONTAINS
         INTEGER :: temp_nxmax, temp_nymax, temp_nzmax, &
 &                  temp_nuvzmax, temp_nwzmax
 
+        CHARACTER(LEN=8) :: temp_preproc_format_version_str
+
         CHARACTER(LEN=128) :: errmesg
 
         if (op == 'DUMP') THEN
+
+
+            ! Write the preprocessing format version string
+            WRITE (iounit) PREPROC_FORMAT_VERSION_STR
 
             ! Write the compiled max dimensions from par_mod - these are
             ! not meant to be reassigned during a LOAD, but used as "header"
@@ -400,6 +426,24 @@ CONTAINS
             WRITE(iounit) nconvlev, nconvtop
 
         ELSE IF (op == 'LOAD') THEN 
+
+            ! Read the preprocessed format version string and insure it
+            ! matches this version
+            READ (iounit) temp_preproc_format_version_str
+            PRINT *, 'Reading preprocessed file format version: ', &
+&                    temp_preproc_format_version_str
+
+            IF (TRIM(temp_preproc_format_version_str) == &
+&                                        TRIM(PREPROC_FORMAT_VERSION_STR)) THEN
+                CONTINUE
+            ELSE
+                PRINT *, ''
+                PRINT *, 'Inconsistent preprocessing format version'
+                PRINT *, 'Expected Version: ', PREPROC_FORMAT_VERSION_STR
+                PRINT *, 'Detected Version: ', temp_preproc_format_version_str
+                PRINT *, ''
+                STOP
+            END IF
 
             ! Read the compiled max dimensions that were dumped from par_mod 
             ! when creating the fp file, so that we can compare against
