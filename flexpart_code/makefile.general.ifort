@@ -9,7 +9,7 @@ DEFS = -DCTBTO
 
 # Set up for devlan ifort
 INTEL_ROOT = /cots/intel/composer_xe_2013.2.146
-GRIB_API_ROOT = /dvl/atm/klinkl/tmp/ifort_grib_api/grib_api-1.12.3
+GRIB_API_ROOT = /dvl/atm/klinkl/src/ifort_grib_api/grib_api-1.12.3
 
 FC       = $(INTEL_ROOT)/bin/ifort
 

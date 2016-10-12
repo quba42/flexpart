@@ -58,9 +58,9 @@ program grib2flexpart
   ! Print the GPL License statement
   !*******************************************************
 #if defined CTBTO
-  print*,'Welcome to GRIB2FLEXPART Version 1.0 CTBTO'
+  print*,'Welcome to GRIB2FLEXPART Version 9.3.1f CTBTO'
 #else
-  print*,'Welcome to GRIB2FLEXPART Version 1.0'
+  print*,'Welcome to GRIB2FLEXPART Version 9.3.1f'
 #endif
 
   print*,'FLEXPART is free software released under the GNU Genera'// &
@@ -216,29 +216,41 @@ integer function overwritecheck( dump_path, input_path, input_is_path )
   write (pid,*) getpid()
   write (current_time, *) time()
   ! generate tmp file name using PID and timestamp
-  tmp_file_name = "overwritecheck_"//trim(adjustl(pid))//"_"//trim(adjustl(current_time))//".tmp"
-  tmp_file_path = trim(dump_path)//"/"//trim(tmp_file_name)
+  !! tmp_file_name = "overwritecheck_"//trim(adjustl(pid))//"_"//trim(adjustl(current_time))//".tmp"
+  !! tmp_file_path = trim(dump_path)//"/"//trim(tmp_file_name)
 
   ! create tmp file in output directory
-  open(10001, file=trim(tmp_file_path), status="new", action="write", iostat=open_status)
+  !! open(10001, file=trim(tmp_file_path), status="new", action="write", iostat=open_status)
   ! check for tmp file
-  if ( open_status /= 0 ) then
-    print *, "Output directory does not exist or is not writeable"
-    stop 'Error: Incorrect arguments'
-  endif
+  !! if ( open_status /= 0 ) then
+  !!   print *, "Output directory does not exist or is not writeable"
+  !!   print *, "File "//trim(tmp_file_path)//", iostat=",open_status
+  !!   print *, "PID: ", pid, getpid()
+  !!   print *, "current_time: ", current_time
+
+  !!   stop 'Error: Incorrect arguments'
+  !! endif
     
   ! generate tmp file name in input directory
   if ( input_is_path == 1) then
-    check_file_path = trim(input_path)//"/"//trim(tmp_file_name)
+    !! check_file_path = trim(input_path)//"/"//trim(tmp_file_name)
+    stop 'Error: Incorrect arguments; input file is path'
   else
-    check_file_path=trim(input_path(:scan(input_path, '/', .TRUE.)))//trim(tmp_file_name)
+    if ( scan(input_path, '/') == 0 ) then
+       check_file_path=trim(dump_path)//"/"//trim(input_path)
+    else
+       check_file_path=trim(dump_path)//trim(input_path(scan(input_path, '/', .TRUE.):))
+    endif
   endif
   !check for file presence
+  print *, "Check if output file "//trim(check_file_path)//" exists ..."
   inquire(file=TRIM(check_file_path), exist=exists)
   ! delete tmp file
-  close(10001, status='DELETE')
+  !! close(10001, status='DELETE')
   if ( exists ) then
     overwritecheck = -1
+    print *, "Warning: Output file "//trim(check_file_path)//" exists"
+    stop 'Please remove this file if the output directory is correct'
   endif
   
 end function

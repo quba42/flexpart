@@ -78,9 +78,9 @@ program flexpart
   ! Print the GPL License statement
   !*******************************************************
 #if defined CTBTO
-  print*,'Welcome to FLEXPART Version 9.0 CTBTO'
+  print*,'Welcome to FLEXPART Version 9.3.1f CTBTO'
 #else
-  print*,'Welcome to FLEXPART Version 9.0'
+  print*,'Welcome to FLEXPART Version 9.3.1f'
 #endif
 
   print*,'FLEXPART is free software released under the GNU Genera'// &

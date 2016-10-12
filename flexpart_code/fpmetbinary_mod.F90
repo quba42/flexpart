@@ -55,7 +55,7 @@ MODULE fpmetbinary_mod
     ! When a change is made to the format of the preprocessed file, such that
     ! this routine will not be able to read a previous version, this version
     ! string should be modified
-    CHARACTER(LEN=8), PARAMETER :: PREPROC_FORMAT_VERSION_STR = '9.3.1e  '
+    CHARACTER(LEN=12), PARAMETER :: PREPROC_FORMAT_VERSION_STR = 'FP_p-9.3.1'//char(0)
 
     PRIVATE IOUNIT_DUMP, IOUNIT_LOAD, IOUNIT_TEXTOUT, fpio,    &
 &           PREPROC_FORMAT_VERSION_STR
@@ -274,7 +274,7 @@ CONTAINS
         INTEGER :: temp_nxmax, temp_nymax, temp_nzmax, &
 &                  temp_nuvzmax, temp_nwzmax
 
-        CHARACTER(LEN=8) :: temp_preproc_format_version_str
+        CHARACTER(LEN=12) :: temp_preproc_format_version_str
 
         CHARACTER(LEN=128) :: errmesg
 
