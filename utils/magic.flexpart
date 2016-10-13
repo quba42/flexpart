@@ -1,0 +1,8 @@
+# Flexpart Pre-Processed Met input file
+0	string	FP_p-	Flexpart
+>5      string/7  >\3     v%s pre-processed met input file
+>>12     lelong  >0         nxmax=%d
+>>16     lelong  >0         nymax=%d
+>>20     lelong  >0         nuvzmax=%d
+>>24     lelong  >0         nwzmax=%d
+>>28     lelong  >0         nzmax=%d
