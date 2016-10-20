@@ -12,9 +12,8 @@ DEFS =
 
 FC       = gfortran
 
-# devlan
-INCPATH  = /dvl/atm/software/local/include
-LIBPATH1 = /dvl/atm/software/usr/lib
+INCPATH  = /usr/local/include
+LIBPATH1 = /usr/local/lib
 LIBPATH2 = /usr/lib/x86_64-linux-gnu
 
 
