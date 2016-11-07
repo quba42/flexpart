@@ -437,11 +437,11 @@ CONTAINS
 &                                        TRIM(PREPROC_FORMAT_VERSION_STR)) THEN
                 CONTINUE
             ELSE
-                PRINT *, ''
+                ! PRINT *, ''  GK: causes relocation truncated to fit: R_X86_64_32
                 PRINT *, 'Inconsistent preprocessing format version'
                 PRINT *, 'Expected Version: ', PREPROC_FORMAT_VERSION_STR
                 PRINT *, 'Detected Version: ', temp_preproc_format_version_str
-                PRINT *, ''
+                ! PRINT *, ''
                 STOP
             END IF
 
@@ -460,14 +460,14 @@ CONTAINS
                 CONTINUE
             ELSE
                 PRINT *, 'Incompatible dimensions between fp file and current FLEXPART!'
-                PRINT *, ''
+                ! PRINT *, ''
                 PRINT *, '                  FP file     Compiled FP'
                 PRINT *, 'nxmax:     ', temp_nxmax, '    ', nxmax 
                 PRINT *, 'nymax:     ', temp_nymax, '    ', nymax 
                 PRINT *, 'nzmax:     ', temp_nzmax, '    ', nzmax 
                 PRINT *, 'nuvzmax:     ', temp_nuvzmax, '    ', nuvzmax 
                 PRINT *, 'nwzmax:     ', temp_nwzmax, '    ', nwzmax 
-                PRINT *, ''
+                ! PRINT *, ''
                 STOP
             END IF
 
