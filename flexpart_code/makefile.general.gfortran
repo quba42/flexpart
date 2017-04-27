@@ -12,9 +12,7 @@ DEFS =
 
 FC       = gfortran
 
-INCPATH  = /usr/local/include
-LIBPATH1 = /usr/local/lib
-LIBPATH2 = /usr/lib/x86_64-linux-gnu
+GRIB_API_ROOT = /dvlscratch/ATM/morton/usr/local/grib_api
 
 # NetCDF4 stuff
 NC4_ROOT = /dvlscratch/ATM/morton/usr/local
@@ -27,10 +25,9 @@ NC4_LIB_FLAGS = -Wl,-rpath=${NC4_ROOT}/netcdf-fortran-4.4.3/lib \
                 -lnetcdf -lnetcdf
 
 
-# alaskawx
-#INCPATH  = /opt/grib-api/include
-#LIBPATH1 = /opt/grib-api/lib
-#LIBPATH2 = /usr/lib/x86_64-linux-gnu
+INCPATH  = ${GRIB_API_ROOT}/include
+LIBPATH1 = ${GRIB_API_ROOT}/lib
+#LIBPATH2 = 
 
 FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH) ${NC4_INCLUDE_FLAGS} 
 
