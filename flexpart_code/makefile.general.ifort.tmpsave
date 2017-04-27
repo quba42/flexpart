@@ -1,40 +1,24 @@
 SHELL = /bin/bash
-FLEXPART_EXECUTABLE = FLEXPART_GFORTRAN
-GRIB2FLEXPART_EXECUTABLE = GRIB2FLEXPART_GFORTRAN
+FLEXPART_EXECUTABLE = flexpart_ifort
+GRIB2FLEXPART_EXECUTABLE = grib2flexpart_ifort
 
 #############################################
-#### Uncomment this to activate performance timing
-#DEFS = -DPERFTIMER -DCTBTO
-#DEFS = -DPERFTIMER
-# DEFS = -DCTBTO
-DEFS = 
+#DEFS = -DCTBTO
 #############################################
 
-FC       = gfortran
+INTEL_ROOT = /usr/local/intel/composer_xe_2013.2.146
+GRIB_API_ROOT = /usr/local/src/ifort_grib_api/grib_api-1.12.3
 
-INCPATH  = /usr/local/include
-LIBPATH1 = /usr/local/lib
-LIBPATH2 = /usr/lib/x86_64-linux-gnu
+FC = $(INTEL_ROOT)/bin/ifort
 
-# NetCDF4 stuff
-NC4_ROOT = /dvlscratch/ATM/morton/usr/local
-NC4_INCLUDE_FLAGS = -I${NC4_ROOT}/netcdf-fortran-4.4.3/include
-NC4_LIB_FLAGS = -Wl,-rpath=${NC4_ROOT}/netcdf-fortran-4.4.3/lib \
-                -L${NC4_ROOT}/netcdf-fortran-4.4.3/lib \
-                -lnetcdff \
-                -Wl,-rpath=${NC4_ROOT}/netcdf-c-4.4.0/lib \
-                -L${NC4_ROOT}/netcdf-c-4.4.0/lib \
-                -lnetcdf -lnetcdf
+INCPATH = $(GRIB_API_ROOT)/fortran
+LIBPATH1 = $(GRIB_API_ROOT)/fortran/.libs
+LIBPATH2 = $(GRIB_API_ROOT)/src/.libs
 
 
-# alaskawx
-#INCPATH  = /opt/grib-api/include
-#LIBPATH1 = /opt/grib-api/lib
-#LIBPATH2 = /usr/lib/x86_64-linux-gnu
+FFLAGS   =   -O2 -mcmodel=medium -convert little_endian -I$(INCPATH) 
 
-FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH) ${NC4_INCLUDE_FLAGS} 
-
-LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -lgrib_api_f90 -lgrib_api -lm -ljasper ${NC4_LIB_FLAGS}
+LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -lgrib_api_f90 -lgrib_api -lm -ljasper
 
 
 MODOBJS = \
