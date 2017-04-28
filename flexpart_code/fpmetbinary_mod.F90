@@ -52,6 +52,9 @@ MODULE fpmetbinary_mod
 
     ! Users may want to change these IO Unit values if they conflict with other parts
     ! of code
+    ! April 2017 (DJM) - These are only needed if you use the fpio_rawbin
+    ! routines for raw binary output.  The default now is NC4, but I've kept
+    ! the old code for the time being. 
     INTEGER, PARAMETER :: IOUNIT_DUMP = 33, IOUNIT_LOAD = 34, &
                           IOUNIT_TEXTOUT = 35
                           
@@ -63,10 +66,14 @@ MODULE fpmetbinary_mod
     ! string should be modified
 
 
-    ! WARNING - for now, for NC4 compatability, make sure that the PREPROC_FMT_STR_DIM 
-    ! defined above is exactly the length of the string PLUS the null character added
+    ! April 2017 (DJM)        
+    ! WARNING - for now, for NC4 compatability, make sure that the 
+    ! PREPROC_FMT_STR_DIM 
+    ! defined above is exactly the length of the string PLUS the null 
+    ! character added
     ! I've had a hell of a time making it all compatible with NC4 (DJM)
-    CHARACTER(LEN=PREPROC_FMT_STR_DIM), PARAMETER :: PREPROC_FORMAT_VERSION_STR = 'FP_p-9.3.2'//char(0)
+    CHARACTER(LEN=PREPROC_FMT_STR_DIM), PARAMETER :: &
+&                         PREPROC_FORMAT_VERSION_STR = 'FP_p-9.3.2'//char(0)
 
     PRIVATE IOUNIT_DUMP, IOUNIT_LOAD, IOUNIT_TEXTOUT, fpio,    &
 &           PREPROC_FORMAT_VERSION_STR
@@ -75,6 +82,10 @@ MODULE fpmetbinary_mod
 CONTAINS
 
   !*****************************************************************************
+  !                                                                            *
+  !    April 2017 (DJM) - the comment below suggesting that variables need     *
+  !         to be read in exactly the same order that they are written applies *
+  !         only to raw binary format, not NC4.                                *
   !                                                                            *
   !    Subroutines fpmetbinary_dump() and fpmetbinary_load() provide the       *
   !    public interface to                                                     *
@@ -2381,7 +2392,7 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_inquire_dimension(ncid, nymaxn_dimid, nymaxn_dimname, &
 &                                                temp_nymaxn)
             call handle_nf90_err(ncret)
-            PRINT *, 'temp_nymaxn: ', temp_nymaxn
+            ! PRINT *, 'temp_nymaxn: ', temp_nymaxn
 
             ! Note that maxspec_dimid and numclass_dimid were checked above
 
