@@ -1,8 +1,49 @@
 # Flexpart Pre-Processed Met input file
-0	string	FP_p-	Flexpart
->5      string/7  >\3     v%s pre-processed met input file
->>12     lelong  >0         nxmax=%d
->>16     lelong  >0         nymax=%d
->>20     lelong  >0         nuvzmax=%d
->>24     lelong  >0         nwzmax=%d
->>28     lelong  >0         nzmax=%d
+0	string	FP_p-	FLEXPART
+>5      string/7  >\3     v%s internal data structures,
+>>72     lefloat x          dx=%f,
+>>76     lefloat x          dy=%f
+#>>12     lelong  x          nxmax=%d
+>>12     lelong  x          [%d,
+#>>16     lelong  x          nymax=%d
+>>16     lelong  x          \b%d,
+#>>20     lelong  x          nuvzmax=%d
+>>20     lelong  x          \b%d,
+#>>24     lelong  x          nwzmax=%d
+>>24     lelong  x          \b%d
+#>>28     lelong  x          nzmax=%d
+>>28     lelong  x          \b%d,
+#>>32     lelong  x          nx=%d
+>>32     lelong  x          \b%d,
+#>>36     lelong  x          ny=%d
+>>36     lelong  x          \b%d,
+#>>40     lelong  x          nxmin1=%d
+>>40     lelong  x          \b%d,
+#>>44     lelong  x          nymin1=%d
+>>44     lelong  x          \b%d,
+#>>48     lelong  x          nxfield=%d
+>>48     lelong  x          \b%d,
+#>>52     lelong  x          nuvz=%d
+>>52     lelong  x          \b%d,
+#>>56     lelong  x          nwz=%d
+>>56     lelong  x          \b%d,
+#>>60     lelong  x          nz=%d
+>>60     lelong  x          \b%d,
+#>>64     lelong  x          nmixz=%d
+>>64     lelong  x          \b%d,
+#>>68     lelong  x          nlev_ec=%d
+>>68     lelong  x          \b%d,
+#>>80     lefloat x          xlon0=%f
+>>80     lefloat x          \b%f,
+#>>84     lefloat x          ylat0=%f
+>>84     lefloat x          \b%f]
+# >>88     lefloat >0         dxconst=%f
+# >>92     lefloat >0         dyconst=%f
+0	string	GRIB 	GRIB met data
+#>7      byte  <3        editionNumber %d
+>7      byte  =2        V%d, provided by
+>>22    byte =98        ECMWF
+>>22    byte =7         NCEP
+>7      byte  =1        V%d, provided by
+>>12    byte =98        ECMWF
+>>12    byte =7         NCEP
