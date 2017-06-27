@@ -4,34 +4,24 @@ GRIB2FLEXPART_EXECUTABLE = GRIB2FLEXPART_GFORTRAN
 
 #############################################
 #### Uncomment this to activate performance timing
-#DEFS = -DPERFTIMER -DCTBTO
 #DEFS = -DPERFTIMER
-# DEFS = -DCTBTO
-DEFS = 
 #############################################
 
 FC       = gfortran
+PREFIX ?= /usr/local
 
-GRIB_API_ROOT = /dvlscratch/ATM/morton/usr/local/grib_api
+INCPATH = $(PREFIX)/include
+LIBPATH1 = -L$(PREFIX)/lib
 
-# NetCDF4 stuff
-NC4_ROOT = /dvlscratch/ATM/morton/usr/local
-NC4_INCLUDE_FLAGS = -I${NC4_ROOT}/netcdf-fortran-4.4.3/include
-NC4_LIB_FLAGS = -Wl,-rpath=${NC4_ROOT}/netcdf-fortran-4.4.3/lib \
-                -L${NC4_ROOT}/netcdf-fortran-4.4.3/lib \
-                -lnetcdff \
-                -Wl,-rpath=${NC4_ROOT}/netcdf-c-4.4.0/lib \
-                -L${NC4_ROOT}/netcdf-c-4.4.0/lib \
-                -lnetcdf -lnetcdf
+## INTEL_ROOT=/path/to/intel/compiler/root
+## FC = $(INTEL_ROOT)/bin/ifort
+## LIBPATH2 = -Wl,-rpath=${INTEL_ROOT}/lib/intel64 -L${INTEL_ROOT}/lib/intel64
 
+## FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH)
+## default is 4 for frecord-marker
+FFLAGS   =   -O2 -mcmodel=medium -fconvert=little-endian -I$(INCPATH)
 
-INCPATH  = ${GRIB_API_ROOT}/include
-LIBPATH1 = ${GRIB_API_ROOT}/lib
-#LIBPATH2 = 
-
-FFLAGS   =   -O2 -m64 -mcmodel=medium -fconvert=little-endian -frecord-marker=4 -I$(INCPATH) ${NC4_INCLUDE_FLAGS} 
-
-LDFLAGS  = $(FFLAGS) -L$(LIBPATH2) -L$(LIBPATH1) -lgrib_api_f90 -lgrib_api -lm -ljasper ${NC4_LIB_FLAGS}
+LDFLAGS = $(FFLAGS) $(LIBPATH2) $(LIBPATH1) -lgrib_api_f90 -lgrib_api -ljasper -lnetcdff -lnetcdf -lnetcdf -lhdf5_hl -lhdf5 -ldl -lm -lcurl
 
 
 MODOBJS = \
