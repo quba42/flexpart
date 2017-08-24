@@ -156,6 +156,9 @@ CONTAINS
         ! Write the height field - variable 'height' is defined in com_mod
         ncfunc_retval = nf90_def_var(ncid, 'height', NF90_DOUBLE, &
 &                                    z_dimid, varid)
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","height of the FLEXPART model levels")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","m a.g.l")
 
         ncfunc_retval = nf90_def_var_deflate(ncid, varid,   &
 &                                            shuffle=0,     &
@@ -168,15 +171,31 @@ CONTAINS
         ! dx, dy, xlon0, xlat0 are all defined in com_mod 
         ncfunc_retval = nf90_def_var(ncid, 'dx', NF90_DOUBLE, varid)
         ncfunc_retval = nf90_put_var(ncid, varid, dx)
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","grid distance in x direction")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","degrees")
+
 
         ncfunc_retval = nf90_def_var(ncid, 'dy', NF90_DOUBLE, varid)
         ncfunc_retval = nf90_put_var(ncid, varid, dy)
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","grid distance in y direction")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","degrees")
+
 
         ncfunc_retval = nf90_def_var(ncid, 'xlon0', NF90_DOUBLE, varid)
         ncfunc_retval = nf90_put_var(ncid, varid, xlon0)
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","longitude of the lowest left corner")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","degrees")
+
 
         ncfunc_retval = nf90_def_var(ncid, 'ylat0', NF90_DOUBLE, varid)
         ncfunc_retval = nf90_put_var(ncid, varid, ylat0)
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","latitude of the lowest left corner")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","degrees")
+
 
         ! All done, close the NetCDF file
         ncfunc_retval = nf90_close(ncid)
@@ -295,18 +314,42 @@ CONTAINS
         IF (nc_varname == 'U') THEN
             ncfunc_retval = nf90_put_var(ncid, varid, &
 &                                        uu(0:nx-1, 0:ny-1, 1:nz, 1))
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","U component of wind in the X[horizontal] direction")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","m s**-1")
+
+
         ELSEIF (nc_varname == 'V') THEN
             ncfunc_retval = nf90_put_var(ncid, varid, &
 &                                        vv(0:nx-1, 0:ny-1, 1:nz, 1))
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","V component of wind in the Y[horizontal] direction")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","m s**-1")
+
+
         ELSEIF (nc_varname == 'T') THEN
             ncfunc_retval = nf90_put_var(ncid, varid, &
 &                                        tt(0:nx-1, 0:ny-1, 1:nz, 1))
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","temperature")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","k")
+
         ELSEIF (nc_varname == 'W') THEN
             ncfunc_retval = nf90_put_var(ncid, varid, &
 &                                        ww(0:nx-1, 0:ny-1, 1:nz, 1))
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","wind component in the Z[vertical] direction")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units","m s**-1")
+
+
         ELSEIF (nc_varname == 'Q') THEN
             ncfunc_retval = nf90_put_var(ncid, varid, &
 &                                        qv(0:nx-1, 0:ny-1, 1:nz, 1))
+! attributes
+            ncfunc_retval = nf90_put_att(ncid, varid, "description","specific humidity")
+            ncfunc_retval = nf90_put_att(ncid, varid, "units"," ")
+
+
         ELSE
             PRINT *,
             PRINT *, 'fp2nc4io:private_dump_3d_field() bad var: ', nc_varname

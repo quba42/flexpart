@@ -1,4 +1,5 @@
-subroutine processmetfields(ind,metdata_format)
+subroutine processmetfields(ind,metdata_format,coordinates_provided, coordX, coordY)
+
   !                       i     o
   !*****************************************************************************
   !                                                                            *
@@ -36,6 +37,8 @@ subroutine processmetfields(ind,metdata_format)
   integer :: ind, metdata_format, i, lastSlash
   integer :: dumpData
   character(len=512):: fpfname, dumpPath, filename
+  integer :: coordX, coordY
+  logical :: coordinates_provided
 
 
   !****************************************************************************
@@ -106,7 +109,11 @@ subroutine processmetfields(ind,metdata_format)
              call readwind_nests(ind,memind(1),uuhn,vvhn,wwhn)
              call calcpar_ecmwf(memind(1),uuh,vvh,pvh) 
              call calcpar_nests(memind(1),uuhn,vvhn,pvhn,metdata_format)
-             call verttransform_ecmwf(memind(1),uuh,vvh,wwh,pvh)
+             if ( coordinates_provided ) then
+                 call verttransform_grib2nc4_ecmwf(memind(1),uuh,vvh,wwh,pvh,coordX,coordY)
+             else
+                 call verttransform_grib2nc4_ecmwf(memind(1),uuh,vvh,wwh,pvh,-1,-1)
+             endif
              call verttransform_nests(memind(1),uuhn,vvhn,wwhn,pvhn)
              memtime(1)=wftime(ind)
           endif
@@ -115,7 +122,11 @@ subroutine processmetfields(ind,metdata_format)
              call readwind_nests(ind,memind(1),uuhn,vvhn,wwhn)
              call calcpar_gfs(memind(1),uuh,vvh,pvh)
              call calcpar_nests(memind(1),uuhn,vvhn,pvhn,metdata_format)
-             call verttransform_gfs(memind(1),uuh,vvh,wwh,pvh)
+             if ( coordinates_provided ) then
+                 call verttransform_grib2nc4_gfs(memind(1),uuh,vvh,wwh,pvh,coordX,coordY)
+             else
+                 call verttransform_grib2nc4_gfs(memind(1),uuh,vvh,wwh,pvh,-1,-1)
+             endif
              call verttransform_nests(memind(1),uuhn,vvhn,wwhn,pvhn)
              memtime(1)=wftime(ind)
           endif

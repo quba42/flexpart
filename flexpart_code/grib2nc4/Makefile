@@ -10,37 +10,41 @@ GRIBAPI = /opt/grib-api
 HDF5 = /opt/hdf5-1.8.16
 NETCDFF = /opt/netcdf-fortran-4.4.3
 NETCDF = /opt/netcdf-c-4.4.0
-
+#GRIBAPI = /usr/local/grib-api
+#HDF5 = /usr/local/hdf5-1.8.16
+#NETCDFF = /usr/local/netcdf-fortran-4.4.3
+#NETCDF = /usr/local/netcdf-c-4.4.0
 
 
 
 BINARY = grib2nc4
-OBJS = processmetfields.o
-FPMODOBJS = par_mod.o com_mod.o class_vtable_mod.o cmapf_mod.o conv_mod.o 
-FLXPRTOBJS = detectformat.o grib2check.o shift_field_0.o gridcheck.o \
-	     readwind.o readwind_nests.o calcpar.o calcpar_nests.o \
-             shift_field.o pbl_profile.o scalev.o obukhov.o \
-             richardson.o ew.o getvdep.o calcpv.o obukhov_gfs.o \
-             richardson_gfs.o getvdep_nests.o calcpv_nests.o psim.o psih.o \
-             qvsat.o caldate.o getrb.o raerod.o getrc.o partdep.o \
-             verttransform.o verttransform_nests.o readwind_gfs.o \
-             calcpar_gfs.o verttransform_gfs.o gridcheck_gfs.o
+CMP_BINARY = nc4cmp
+OBJS = processmetfields.o verttransform_grib2nc4_ecmwf.o verttransform_grib2nc4_gfs.o
+FPMODOBJS = ${FLEXPART_SRC}/par_mod.o ${FLEXPART_SRC}/com_mod.o ${FLEXPART_SRC}/class_vtable_mod.o ${FLEXPART_SRC}/cmapf_mod.o ${FLEXPART_SRC}/conv_mod.o 
+FLXPRTOBJS = ${FLEXPART_SRC}/detectformat.o ${FLEXPART_SRC}/grib2check.o ${FLEXPART_SRC}/shift_field_0.o ${FLEXPART_SRC}/gridcheck.o \
+	     ${FLEXPART_SRC}/readwind.o ${FLEXPART_SRC}/readwind_nests.o ${FLEXPART_SRC}/calcpar.o ${FLEXPART_SRC}/calcpar_nests.o \
+             ${FLEXPART_SRC}/shift_field.o ${FLEXPART_SRC}/pbl_profile.o ${FLEXPART_SRC}/scalev.o ${FLEXPART_SRC}/obukhov.o \
+             ${FLEXPART_SRC}/richardson.o ${FLEXPART_SRC}/ew.o ${FLEXPART_SRC}/getvdep.o ${FLEXPART_SRC}/calcpv.o ${FLEXPART_SRC}/obukhov_gfs.o \
+             ${FLEXPART_SRC}/richardson_gfs.o ${FLEXPART_SRC}/getvdep_nests.o ${FLEXPART_SRC}/calcpv_nests.o ${FLEXPART_SRC}/psim.o ${FLEXPART_SRC}/psih.o \
+             ${FLEXPART_SRC}/qvsat.o ${FLEXPART_SRC}/caldate.o ${FLEXPART_SRC}/getrb.o ${FLEXPART_SRC}/raerod.o ${FLEXPART_SRC}/getrc.o ${FLEXPART_SRC}/partdep.o \
+             ${FLEXPART_SRC}/verttransform.o ${FLEXPART_SRC}/verttransform_nests.o ${FLEXPART_SRC}/readwind_gfs.o \
+             ${FLEXPART_SRC}/calcpar_gfs.o ${FLEXPART_SRC}/verttransform_gfs.o ${FLEXPART_SRC}/gridcheck_gfs.o
 
 
 VPATH = ${FLEXPART_SRC}
 FFLAGS = -mcmodel=medium
 
 INCLUDES_NETCDF = -I${NETCDFF}/include
-INCLUDES = -I${GRIBAPI}/include ${INCLUDES_NETCDF}
+INCLUDES = -I${GRIBAPI}/include ${INCLUDES_NETCDF}  -I${FLEXPART_SRC}
 
 
 ### NetCDF link flags - use the first one for dynamic libs, the second
 ### one for static libs
-#LDFLAGS_NETCDF = -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf 
-LDFLAGS_NETCDF=-static -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf -lnetcdf -L${HDF5}/lib -lhdf5_fortran -lhdf5_hl -lhdf5hl_fortran -lhdf5 -ldl -lz
+LDFLAGS_NETCDF = -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf 
+#LDFLAGS_NETCDF=-static -L${NETCDFF}/lib -lnetcdff -L${NETCDF}/lib -lnetcdf -lnetcdf -L${HDF5}/lib -lhdf5_fortran -lhdf5_hl -lhdf5hl_fortran -lhdf5 -ldl -lz
 
 
-LDFLAGS = -L${GRIBAPI}/lib -lgrib_api_f90 -lgrib_api ${LDFLAGS_NETCDF} -ljasper
+LDFLAGS = -L${GRIBAPI}/lib -lgrib_api_f90 -lgrib_api ${LDFLAGS_NETCDF} -ljasper -L${FLEXPART_SRC}
 
 
 #------------ Creating the binary ------------------
@@ -50,6 +54,13 @@ ${BINARY} : ${BINARY}.o fp2nc4io_mod.o ${FLXPRTOBJS} ${FPMODOBJS} ${OBJS}
 
 ${BINARY}.o : ${BINARY}.F90 fp2nc4io_mod.mod ${FPMODOBJS} Makefile
 	${FC} -c ${BINARY}.F90 ${FFLAGS} ${INCLUDES}
+
+#-----------  NC4 compare ------------------------
+${CMP_BINARY} : ${CMP_BINARY}.o
+	${FC} -o ${CMP_BINARY} ${CMP_BINARY}.o ${LDFLAGS}
+
+${CMP_BINARY}.o : ${CMP_BINARY}.F90 Makefile
+	${FC} -c ${CMP_BINARY}.F90 ${FFLAGS} ${INCLUDES}
 
 fp2nc4io_mod.mod : ${FPMODOBJS} 
 	${FC} -c fp2nc4io_mod.F90 ${FFLAGS} ${INCLUDES}

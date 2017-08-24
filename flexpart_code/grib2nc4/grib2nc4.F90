@@ -10,6 +10,11 @@ PROGRAM grib2nc4
     !                                                                        *
     !        May 2016                                                        *
     !*************************************************************************
+   !   M. Harustak                                                          *
+   !   -) modification to generate the output in single precission          *
+   !   -) possibility to add a lat lon selection to obtain the met variables*
+   !      in the vertical levels defined in that location                   *
+   !*************************************************************************
 
     USE par_mod
     USE com_mod
@@ -20,20 +25,21 @@ PROGRAM grib2nc4
 
     IMPLICIT NONE
 
-    LOGICAL :: metfile_exists   
+    LOGICAL :: metfile_exists, coordinates_provided, lat_provided, lon_provided
     INTEGER :: i, j, k
     INTEGER :: num_optional_vars, num_vars
     INTEGER, PARAMETER :: DEFLATE_LEVEL = 2  ! Compression level (0-9)
-    CHARACTER(LEN=512) :: met_filepath, netcdf4_filepath
+    CHARACTER(LEN=512) :: met_filepath, netcdf4_filepath, param_str, coord_name_str, coord_val_str
     CHARACTER, DIMENSION(:), ALLOCATABLE :: vars_list  ! list of variables
-    
+    INTEGER :: coordX, coordY, stat
+    REAL :: coord_lat, coord_lon
     INTEGER :: metdata_format = UNKNOWN_METDATA  ! From FP par_mod
 
     !--------------------------------------------------------
 
     ! Read in mandatory arguments
     IF (IARGC() < 2) THEN
-        PRINT *, 'Usage: grib2netcdf4 <inpath> <outpath> [optional varnames]'
+        PRINT *, 'Usage: grib2netcdf4 <inpath> <outpath> [lon=X lat=Y] [optional varnames]'
         STOP
     ELSE
         CALL GETARG(1, met_filepath) 
@@ -47,23 +53,47 @@ PROGRAM grib2nc4
 
     ! First, get the number of optional args and allocate vars_list,
     ! and fill the first three elements
-    IF (IARGC() > 2) THEN
-        num_optional_vars = IARGC() - 2
-    ELSE
-        num_optional_vars = 0
-    ENDIF
+    coordinates_provided = .FALSE.
+    lat_provided = .FALSE.
+    lon_provided = .FALSE.
+    ALLOCATE( vars_list(IARGC()+3),stat=stat )
 
-    num_vars = num_optional_vars + 3
-    ALLOCATE( vars_list(num_vars) )
     vars_list(1) = 'u'
     vars_list(2) = 'v'
     vars_list(3) = 't'
         
-    ! Read in optional variable arguments, starting at element 4 of vars_list
-    IF (IARGC() > 2) THEN
-        DO i=1,num_optional_vars
-            CALL GETARG( i+2, vars_list(i+3) )
-        ENDDO 
+    num_vars = 3
+    DO i=3,IARGC()
+        CALL GETARG(i,param_str)
+        param_str = TRIM(param_str)
+        j = SCAN(param_str,"=")
+        if (j>1) then
+            coord_name_str=param_str(1:j-1)
+            coord_val_str=param_str(j+1:)
+            IF ( coord_name_str == "lat" .or. coord_name_str == "LAT" ) THEN
+                read(coord_val_str,*,iostat=stat) coord_lat
+                if ( stat == 0 ) then
+                    lat_provided = .TRUE.
+                else
+                    print *, "Incorrect coordinates: ", coord_val_str
+                    stop
+                endif
+            ELSE IF ( coord_name_str == "lon" .or. coord_name_str == "LON" ) THEN
+                read(coord_val_str,*,iostat=stat) coord_lon
+                if ( stat == 0 ) then
+                    lon_provided = .TRUE.
+                else
+                    print *, "Incorrect coordinates: ", coord_val_str
+                    stop
+                endif
+            ENDIF
+        else
+            num_vars = num_vars + 1
+            vars_list(num_vars) = param_str
+        endif
+    ENDDO
+    IF (lat_provided .AND. lon_provided) THEN
+        coordinates_provided = .TRUE.
     ENDIF
 
     ! Before proceeding, let's make sure the vars_list is good - otherwise,
@@ -125,8 +155,18 @@ PROGRAM grib2nc4
     ! to do so
     !CALL gridcheck_nests
 
+    ! If the coordinates are provided, then we need to obtain
+    !  the corresponding grid indexes since this is what verttransform needs
+    if ( coordinates_provided ) then
+        coordX = (coord_lon-xlon0)/dx
+        coordY = (coord_lat-ylat0)/dy
+        print *, "Coordinates: "
+        print *, "lon: ", coord_lon, ", lat: ",coord_lat
+        print *, "x: ", coordX, ", y: ", coordY
+    endif
+
     PRINT *, 'Calling processmetfields()...'
-    call processmetfields( 1, metdata_format)
+    call processmetfields( 1, metdata_format, coordinates_provided, coordX, coordY)
 
     PRINT *, 'Calling fp2nc4io_dump()...'
     call fp2nc4io_dump( netcdf4_filepath, num_vars, vars_list, DEFLATE_LEVEL)

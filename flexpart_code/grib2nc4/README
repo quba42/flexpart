@@ -6,7 +6,7 @@ Contact: Don Morton, don.morton@borealscicomp.com
          Delia Arnold, deliona.arnold@gmail.com
          M. Harustak
 
-Last Update: 29 May 2016
+Last Update: 05 July 2017
 
 ======================================================================
 1. Introduction
@@ -18,6 +18,10 @@ already developed for FLEXPART to open an ECMWF or NCEP met file and perform
 all the operations that FLEXPART normally does in order to prepare the met
 data for computations.  It then takes the data which has been stored in
 FLEXPART global arrays and selectively writes it to a NetCDF4 file.
+
+Optional parameter allows user to request arrays calculated for specified
+location instead of default algorithm selecting lowest left corner of meteorological
+domain with a surface pressure above 100000Pa.
 
 This distribution is integrated into the FLEXPART source code, in a grib2nc4
 subdirectory, but it doesn't necessarily have to reside there.  The 
@@ -40,6 +44,14 @@ they will be used to read in a small sample ECMWF GRIB file, preprocess it,
 write it to NC4 file, then read it back and compare with the preprocessed
 data still in the FLEXPART arrays.  It does not test whether preprocessing
 is good, but only whether data was stored correctly in the NC4 files.
+
+To be able to quickly compare variables in NetCDF files, simple utility
+nc4cmp was introduced. It compares specified variable in two NetCDF files
+(with dimension up to 3) and it prints average and maximal difference between
+the values. It allows for specification of optional tolerance (in %).
+Difference is calculated as abs((value1-value2)/value1)*100.
+It is calculated for all values of variable multidimensional array.
+
 
 ======================================================================
 2. Quick-Start
@@ -64,6 +76,8 @@ distribution, then there should be no need to change FLEXPART_SRC.
 Simply type "make" (noting that you may see some warnings related to
 variables for nests) to produce grib2nc4.
 
+NetCDF compare utility nc4cmp can be built using command "make nc4cmp".
+
 Before trying to run, you might want to try "make test" to make sure that
 the simple test works as expected.
 
@@ -80,6 +94,11 @@ WARNING - there is currently nothing to protect you if you get these out
 of order.  It is possible for you to overwrite your met file if you use it 
 as the second argument.
 
+Usage:
+
+  ./grib2nc4 <inpath> <outpath> [lat=value lon=value] [optional varnames]
+
+
 Sample usage:
 
   ./grib2nc4 GD15051200 def9_nc1p0.nc4
@@ -91,6 +110,29 @@ It is possible to write two more option variables, w and q, simply by adding
 them to the command.  For example: 
 
   ./grib2nc4 GD15051200 def9_nc1p0.nc4  q  w
+
+Calculation at user specified location can be requested by adding coord parameter
+to the command line:
+
+  ./grib2nc4 GD15051200 def9_nc1p0.nc4 lon=20 lat=45
+
+To compare two NetCDF files, nc4cmp can be used.
+
+Usage:
+
+  ./nc4cmp <file1> <file2> <variable> [optional tolerance in %]
+
+Sample usage:
+
+  ./nc4cmp def9_nc1p0.nc4 def9_nc1p0_reference.nc4 U
+
+Sample usage with tolerance 1%:
+
+  ./nc4cmp def9_nc1p0.nc4 def9_nc1p0_reference.nc4 U 1.0
+
+This will extract variable U from both NetCDF files, print and compare dimensions,
+compare values and print average and maximal difference.
+
 
 ======================================================================
 3.  Installation

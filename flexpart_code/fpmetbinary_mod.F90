@@ -237,38 +237,82 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 
             ncret = nf90_def_dim(ncid, 'nxmax', nxmax, nxmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","maximum dimension of wind fields in x")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'nymax', nymax, nymax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","maximum dimension of wind fields in y")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'nzmax', nzmax, nzmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","maximum dimension of wind fields in z")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'nuvzmax', nuvzmax, nuvzmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description"," maximum dimension of (u,v) wind field in z")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'nwzmax', nwzmax, nwzmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description"," maximum dimension of w component of  wind field in z")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'maxspec', maxspec, maxspec_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description"," maximum number of species")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'numclass', numclass, numclass_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description"," maximum number of ageclasses")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ! There are a handful of variables indexed from 0 to n, rather than 0 to n-1,
             ! so these dimensions handle that.  What a pain.
             ncret = nf90_def_dim(ncid, 'zero_to_nzmax', nzmax+1, zero_to_nzmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","variable to change indexing of variables with nzmax dimension")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'zero_to_maxnests', maxnests+1, zero_to_maxnests_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","variable to change indexing of variables with maxnests dimension")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ! This is for a couple of small arrays that store polar stereographic stuff
             ncret = nf90_def_dim(ncid, 'polemap_dim', 9, polemap_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","variable to store polar stereographic indexing")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ! These two values come from conv_mod
             ncret = nf90_def_dim(ncid, 'nconvlevmax_dim', nconvlevmax, nconvlevmax_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","maximum number of levels for convection")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
             ncret = nf90_def_dim(ncid, 'na_dim', na, na_dimid)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","maximum number of levels for convection +1")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ! Scalar values
-
 
             dim1dids = (/preproc_fmt_str_dimid/)
             ncret = nf90_def_var(ncid, 'preproc_fmt_str', NF90_CHAR, &
@@ -287,83 +331,130 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nx)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in x")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'ny', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, ny)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in y")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nxmin1', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nxmin1)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in x -1 (nx-1)")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nymin1', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nymin1)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in y -1 (ny-1)")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'nxfield', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nxfield)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in x for limited area fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nuvz', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nuvz)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of (u,v) wind fields in z direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nwz', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nwz)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of w wind fields in z direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nz', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nz)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","number of vertical levels in the transformed coordinates")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nmixz', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nmixz)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","number of levels up to maximum PBL height (3500 m)")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nlev_ec', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nlev_ec)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","number of vertical levels ecmwf model")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'dx', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, dx)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","grid distance in x direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'dy', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, dy)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","grid distance in y direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'xlon0', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, xlon0)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","geographical longitude of the lower left corner of the wind fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'ylat0', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, ylat0)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","geographical latitude of the lower left corner of the wind fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'dxconst', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, dxconst)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable needed for utransform")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'dyconst', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, dyconst)
             call handle_nf90_err(ncret)
-
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable needed for vtransform")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ! Fixed fields, static in time
             dim2dids = (/nxmax_dimid, nymax_dimid/)
@@ -379,6 +470,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                oro(0:nxmax-1, 0:nymax-1))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","orography of the ECMWF model")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'excessoro', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -391,6 +486,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                excessoro(0:nxmax-1, 0:nymax-1))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","excess orography mother domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'lsm', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -403,6 +502,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                lsm(0:nxmax-1, 0:nymax-1))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","land sea mask")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             dim3dids = (/nxmax_dimid, nymax_dimid, numclass_dimid/)
             ! numclass comes from par_mod - number of land use classes
@@ -417,6 +520,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xlanduse(0:nxmax-1, 0:nymax-1, 1:numclass))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","area fraction in percent")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             dim1dids = (/nzmax_dimid/)
             ncret = nf90_def_var(ncid, 'height', NF90_FLOAT, &
@@ -430,7 +537,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                height(1:nzmax))
             call handle_nf90_err(ncret)
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","heights of all model levels")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
 
 
@@ -448,6 +557,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                uu(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","U component of wind in the [horizontal] direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'vv', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -460,6 +572,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                vv(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","V component of wind in the Y[horizontal] direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'uupol', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -472,6 +588,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                uupol(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","horizontal component in polar stereographic projection of wind")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'vvpol', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -484,6 +604,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                vvpol(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","horizontal component in polar stereographic projection of wind")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'ww', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -496,6 +620,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ww(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","wind component in the Z[vertical] direction")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'tt', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -508,6 +636,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tt(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","temperature")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'qv', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -520,6 +652,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qv(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","specific humidity data")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'pv', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -532,6 +667,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                pv(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","potential vorticity")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K*m**2 kg**-1 s**-1")
+
 
             ncret = nf90_def_var(ncid, 'rho', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -544,6 +683,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                rho(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","air density")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg m**-3")
+
 
             ncret = nf90_def_var(ncid, 'drhodz', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -556,6 +699,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                drhodz(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","vertical air density gradient")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg m**-2")
+
 
             ncret = nf90_def_var(ncid, 'clouds', NF90_BYTE, &
 &                                       dim3dids, ncvarid)
@@ -568,7 +715,12 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                clouds(0:nxmax-1, 0:nymax-1, 1:nzmax, cm_index))
             call handle_nf90_err(ncret)
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","vcloud mask, &
+                                 no cloud no precip = 0, cloud no precip = 1, &
+                                 rainout  conv/lsp dominated  2/3, &
+                                 washout  conv/lsp dominated = 4/5 ")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
             ! Note the change in z dimension for the following
@@ -585,6 +737,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tth(0:nxmax-1, 0:nymax-1, 1:nuvzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","temperature in the original input model level")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'qvh', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -597,6 +753,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qvh(0:nxmax-1, 0:nymax-1, 1:nuvzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","specific humidity in the original input model level")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'pplev', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -609,6 +769,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                pplev(0:nxmax-1, 0:nymax-1, 1:nuvzmax, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure in pressure levels for GFS version")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
 
 
             dim2dids = (/nxmax_dimid, nymax_dimid/)
@@ -623,6 +786,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                cloudsh(0:nxmax-1, 0:nymax-1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","height of the cloud layer")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
 
 
@@ -648,6 +814,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ps(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface pressure")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'sd', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -660,6 +830,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                sd(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","snow depth")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'msl', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -672,6 +846,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                msl(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mean sea level pressure")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'tcc', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -684,6 +862,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tcc(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","total cloud cover")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'u10', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -696,6 +878,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                u10(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","10 m u component of wind velocity")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'v10', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -708,6 +893,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                v10(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","10 m v component of wind velocity")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'tt2', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -720,6 +909,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tt2(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m temperature")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'td2', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -732,6 +925,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                td2(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m dew point temperature")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'lsprec', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -744,6 +941,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                lsprec(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","large scale total precipitation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","mm h**-1")
+
 
             ncret = nf90_def_var(ncid, 'convprec', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -756,6 +957,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                convprec(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","convective precipitation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","mm h**-1")
+
 
             ncret = nf90_def_var(ncid, 'sshf', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -768,6 +973,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                sshf(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface sensible heat flux")
+            ncret = nf90_put_att(ncid, ncvarid, "units","J m**-2")
+
 
             ncret = nf90_def_var(ncid, 'ssr', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -780,6 +989,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ssr(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface solar radiation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","J m**-2")
+
 
             ncret = nf90_def_var(ncid, 'surfstr', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -792,6 +1005,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                surfstr(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface stress")
+            ncret = nf90_put_att(ncid, ncvarid, "units","N m**-2 s")
+
 
             ncret = nf90_def_var(ncid, 'ustar', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -804,6 +1021,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ustar(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","friction velocity")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'wstar', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -816,6 +1037,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                wstar(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","convective velocity scale")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'hmix', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -828,6 +1053,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                hmix(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mixing height")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'tropopause', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -840,6 +1069,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tropopause(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","altitude of thermal tropopause")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'oli', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -852,6 +1085,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                oli(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","inverse Obukhov length (1/L)")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'diffk', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -864,7 +1101,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                diffk(0:nxmax-1, 0:nymax-1, 1, cm_index))
             call handle_nf90_err(ncret)
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","diffusion coefficient at reference height")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m**2 s**-1")
 
 
 !           !PRINT *, 'SUM(ps(0:nxmax-1, 0:nymax-1, 1, cm_index)): ', &
@@ -887,7 +1126,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                vdep(0:nxmax-1, 0:nymax-1, 1:maxspec, cm_index))
             call handle_nf90_err(ncret)
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","deposition velocity")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-2")
 
 
             ! 1d fields
@@ -901,6 +1142,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                z0(1:numclass))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface roughness length")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
 
             dim1dids = (/nwzmax_dimid/)
@@ -916,6 +1160,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                akm(1:nwzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","ECMWF vertical discretization parameter")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'bkm', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -928,6 +1176,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                bkm(1:nwzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","ECMWF  vertical discretization parameter")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
             dim1dids = (/nuvzmax_dimid/)
@@ -943,6 +1194,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                akz(1:nuvzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","ECMWF vertical discretization parameter at center of layer")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'bkz', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -955,6 +1210,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                bkz(1:nuvzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","ECMWF vertical discretization parameter at center of layer")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
             dim1dids = (/nzmax_dimid/)
@@ -970,6 +1228,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                aknew(1:nzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","model discretization coefficient at the interpolated levels")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
 
             ncret = nf90_def_var(ncid, 'bknew', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -982,6 +1243,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                bknew(1:nzmax))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","model discretization coefficient at the interpolated levels")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
 !            PRINT *, 'SUM(bknew(1:nzmax)): ', &
@@ -1016,6 +1280,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                nxn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in x for the nexted domain")
+
 
             ncret = nf90_def_var(ncid, 'nyn', NF90_INT, &
 &                                       dim1dids, ncvarid)
@@ -1028,6 +1295,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                nyn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","actual dimensions of wind fields in y for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'dxn', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1040,6 +1311,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                dxn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","grid distance in x direction for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'dyn', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1052,6 +1327,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                dyn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","grid distance in y direction for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'xlon0n', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1064,6 +1343,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xlon0n(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","geographical longitude of the &
+                                lower left corner of the nested wind fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'ylat0n', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1076,8 +1360,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ylat0n(1:maxnests))
             call handle_nf90_err(ncret)
-
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","geographical latitude of &
+                                 the lower left corner of the nested wind fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
             ! Nested fields, static over time
@@ -1094,6 +1380,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                oron(0:nxmaxn-1, 0:nymaxn-1, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","orography of the ECMWF model for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'excessoron', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1106,6 +1396,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                excessoron(0:nxmaxn-1, 0:nymaxn-1, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","excess orography nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'lsmn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1118,6 +1412,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                lsmn(0:nxmaxn-1, 0:nymaxn-1, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","land sea mask for the nested domian")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             dim4dids = (/nxmaxn_dimid, nymaxn_dimid, numclass_dimid, maxnests_dimid/)
 
@@ -1132,6 +1430,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xlandusen(0:nxmaxn-1, 0:nymaxn-1, 1:numclass, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","area fraction in percent for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
 !            PRINT *, 'SUM(oron): ', SUM(oron)
 
@@ -1151,6 +1453,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                uun(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","U component of wind in the [horizontal] &
+                                 direction for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'vvn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1163,6 +1470,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                vvn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","V component of wind in the Y[horizontal] &
+                                 direction for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'wwn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1175,6 +1486,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                wwn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","wind componend in the Z[vertical] &
+                                  direction for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'ttn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1187,6 +1503,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ttn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","temperature for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'qvn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1199,6 +1519,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qvn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","specific humidity data for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'pvn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1211,6 +1534,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                pvn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","potential vorticity for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K*m**2 kg**-1 s**-1")
 
             ncret = nf90_def_var(ncid, 'rhon', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1223,6 +1549,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                rhon(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","air density for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg m**-3")
+
 
             ncret = nf90_def_var(ncid, 'drhodzn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1235,6 +1565,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                drhodzn(0:nxmaxn-1, 0:nymaxn-1, 1:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","vertical air density gradient for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg m**-2")
 
 
             ! Note the new dimensions
@@ -1251,6 +1584,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tthn(0:nxmaxn-1, 0:nymaxn-1, 1:nuvzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","temperature in the original &
+                                 input model level for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'qvhn', NF90_FLOAT, &
 &                                       dim4dids, ncvarid)
@@ -1263,6 +1601,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qvhn(0:nxmaxn-1, 0:nymaxn-1, 1:nuvzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","specific humidity in the original &
+                                input model level for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ! Note the new dimensions
             dim4dids = (/nxmaxn_dimid, nymaxn_dimid, zero_to_nzmax_dimid, maxnests_dimid/)
@@ -1278,6 +1621,13 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                cloudsn(0:nxmaxn-1, 0:nymaxn-1, 0:nzmax, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","vcloud mask, &
+                                 no cloud no precip = 0, cloud no precip = 1, &
+                                 rainout  conv/lsp dominated  2/3, &
+                                 washout  conv/lsp dominated = 4/5 for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ! Note the new dimensions
             dim3dids = (/nxmaxn_dimid, nymaxn_dimid, maxnests_dimid/)
@@ -1293,6 +1643,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                cloudsnh(0:nxmaxn-1, 0:nymaxn-1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","cloud mask at the horizontal levels")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
 
 !            PRINT *, 'SUM(uun): ', SUM(uun(:,:,:,cm_index,:))
@@ -1315,6 +1669,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                psn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface pressure of the nested domian")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'sdn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1327,6 +1685,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                sdn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","snow depth for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
+
 
             ncret = nf90_def_var(ncid, 'msln', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1339,6 +1701,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                msln(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mean sea level pressure for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'tccn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1351,6 +1717,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tccn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","total cloud cover for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'u10n', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1363,6 +1733,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                u10n(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","10 m u component of wind velocity for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'v10n', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1375,6 +1748,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                v10n(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","10 m v component of wind velocity for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'tt2n', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1387,6 +1763,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tt2n(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m temperature for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'td2n', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1399,6 +1779,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                td2n(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m dew point temperature for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'lsprecn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1411,6 +1795,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                lsprecn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","large scale total precipitation for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","mm h**-1")
 
             ncret = nf90_def_var(ncid, 'convprecn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1423,6 +1810,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                convprecn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","convective precipitation for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","mm h**-1")
 
             ncret = nf90_def_var(ncid, 'sshfn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1435,6 +1825,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                sshfn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface sensible heat flux for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","J m**-2")
 
             ncret = nf90_def_var(ncid, 'ssrn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1447,6 +1840,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ssrn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface solar radiation for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","J m**-2")
 
             ncret = nf90_def_var(ncid, 'surfstrn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1459,6 +1855,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                surfstrn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface stress for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","N m**-2 s")
+
 
             ncret = nf90_def_var(ncid, 'ustarn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1471,6 +1871,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ustarn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","friction velocity for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
 
             ncret = nf90_def_var(ncid, 'wstarn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1483,6 +1886,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                wstarn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","convective velocity scale for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-1")
+
 
             ncret = nf90_def_var(ncid, 'hmixn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1495,6 +1902,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                hmixn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mixing height for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
             ncret = nf90_def_var(ncid, 'tropopausen', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1507,6 +1917,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tropopausen(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","altitude of thermal tropopause for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
             ncret = nf90_def_var(ncid, 'olin', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1519,6 +1932,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                olin(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","inverse Obukhov length (1/L) for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m")
 
             ncret = nf90_def_var(ncid, 'diffkn', NF90_FLOAT, &
 &                                       dim3dids, ncvarid)
@@ -1531,6 +1947,12 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                diffkn(0:nxmaxn-1, 0:nymaxn-1, 1, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","diffusion coefficient at reference height &
+                                 for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m**2 s**-1")
+
+
 
             dim4dids = (/nxmaxn_dimid, nymaxn_dimid, maxspec_dimid, maxnests_dimid/)
 
@@ -1547,7 +1969,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                vdepn(0:nxmaxn-1, 0:nymaxn-1, 1:maxspec, cm_index, 1:maxnests))
             call handle_nf90_err(ncret)
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","deposition velocity for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","m s**-2")
 
 !            PRINT *, 'SUM(psn): ', SUM(psn(:,:,:,cm_index,:))
 !            PRINT *, 'SUM(surfstrn): ', SUM(surfstrn(:,:,:,cm_index,:))
@@ -1569,6 +1993,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xresoln(0:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","factor by which the resolutions in the nests &
+                                  is enhanced compared to mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'yresoln', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1581,6 +2010,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                yresoln(0:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","factor by which the resolutions in the nests &
+                                  is enhanced compared to mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             dim1dids = (/maxnests_dimid/)
 
@@ -1595,6 +2029,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xln(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","lower left corner x  point of nested grids &
+                                in grid coordinates of mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'yln', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1607,6 +2046,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                yln(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","lower left corner y  point of nested grids &
+                                in grid coordinates of mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'xrn', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1619,6 +2063,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                xrn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","upper right corner x  point of nested grids &
+                                in grid coordinates of mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'yrn', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1631,6 +2080,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                yrn(1:maxnests))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","upper right corner y  point of nested grids &
+                                in grid coordinates of mother grid")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 !            PRINT *, 'SUM(yresoln): ', SUM(yresoln)
 !            PRINT *, 'SUM(xrn): ', SUM(xrn)
@@ -1648,6 +2101,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                southpolemap(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable to define stereographic projections")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'northpolemap', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1657,7 +2114,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                northpolemap(:))
-
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable to define stereographic projections")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
             ! xglobal, sglobal, nglobal are LOGICAL vars, and need to be converted
@@ -1666,26 +2125,45 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, logical2integer(xglobal))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","logical variable  T for global fields, F for limited area fields")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'sglobal', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, logical2integer(sglobal))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","logical variable  T if domain extends towards south pole")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'nglobal', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, logical2integer(nglobal))
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","logical variable T if domain extends towards north pole")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'switchnorthg', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, switchnorthg)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","degrees for use polar stereographic grid north of switchnorth")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'switchsouthg', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, switchsouthg)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","degrees for use polar stereographic grid south of switchshouth")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 
 
@@ -1706,6 +2184,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                pconv(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure at the input model levels for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'dpr', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1715,6 +2197,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                dpr(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure difference around tconv(k)")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'pconv_hpa', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1724,6 +2210,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                pconv_hpa(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure at the input model levels &
+                                 in hPa for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","hPa")
+
 
             ncret = nf90_def_var(ncid, 'ft', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1733,6 +2224,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                ft(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable for the convection scheme")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'fq', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1742,6 +2237,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                fq(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable for the convection scheme")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             ncret = nf90_def_var(ncid, 'sub', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1751,6 +2250,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                sub(:))
+
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","auxiliary variable for the convection scheme")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
+
 
             dim1dids = (/na_dimid/)
 
@@ -1762,6 +2266,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                phconv(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure between levels k-1 and k")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'phconv_hpa', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1771,6 +2279,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                phconv_hpa(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","pressure between levels k-1 and k in hPa")
+            ncret = nf90_put_att(ncid, ncvarid, "units","hPa")
 
             ncret = nf90_def_var(ncid, 'tconv', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1780,6 +2291,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                tconv(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","temperature at the input model levels &
+                                for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'qconv', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1789,6 +2305,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qconv(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","specific humidity at the input model  &
+                                levels for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","none")
+
 
             ncret = nf90_def_var(ncid, 'qsconv', NF90_FLOAT, &
 &                                       dim1dids, ncvarid)
@@ -1798,6 +2319,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                qsconv(:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","Saturation water vapor specific humidity &
+                                for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg/kg")
+
 
             ! New dimensions
             dim2dids = (/nconvlevmax_dimid, nconvlevmax_dimid/)
@@ -1810,6 +2336,10 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                fmass(:,:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mass in the grid column for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg")
+
 
             ncret = nf90_def_var(ncid, 'fmassfrac', NF90_FLOAT, &
 &                                       dim2dids, ncvarid)
@@ -1819,6 +2349,11 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                fmassfrac(:,:))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","mass fraction due to  the convection &
+                                displacement from level k to level k")
+            ncret = nf90_put_att(ncid, ncvarid, "units","kg")
+
 
 
             ! New dimensions
@@ -1832,6 +2367,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                cbaseflux(0:nxmax-1,0:nymax-1))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","cloudbase massflux due to the convection")
+            ncret = nf90_put_att(ncid, ncvarid, "units","(kg/m**2)/s")
 
             ! New dimensions
             dim3dids = (/nxmaxn_dimid, nymaxn_dimid, maxnests_dimid/)
@@ -1844,6 +2382,9 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
 &                                        deflate_level=DEF_LEVEL)
             ncret = nf90_put_var(ncid, ncvarid, &
 &                                cbasefluxn(0:nxmaxn-1,0:nymaxn-1,1:maxnests))
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","cloudbase massflux due to the convection for the nested domain")
+            ncret = nf90_put_att(ncid, ncvarid, "units","(kg/m**2)/s")
 
 
             ! Scalars
@@ -1851,26 +2392,44 @@ PRINT *, 'OPENED NC4 FILE FOR READING...'
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, psconv)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","surface pressure for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","Pa")
+
 
             ncret = nf90_def_var(ncid, 'tt2conv', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, tt2conv)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m temperature for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'td2conv', NF90_FLOAT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, td2conv)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","2 m dew point temperature for the convection calculation")
+            ncret = nf90_put_att(ncid, ncvarid, "units","K")
+
 
             ncret = nf90_def_var(ncid, 'nconvlev', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nconvlev)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","number of levels for convection")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
             ncret = nf90_def_var(ncid, 'nconvtop', NF90_INT, ncvarid)
             call handle_nf90_err(ncret)
             ncret = nf90_put_var(ncid, ncvarid, nconvtop)
             call handle_nf90_err(ncret)
+! attributes
+            ncret = nf90_put_att(ncid, ncvarid, "description","upper levels for convection")
+            ncret = nf90_put_att(ncid, ncvarid, "units"," ")
 
 !            PRINT *, 'SUM(pconv): ', SUM(pconv)
 !            PRINT *, 'SUM(qconv): ', SUM(qconv)
