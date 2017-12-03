@@ -20,15 +20,15 @@ NETCDF = /opt/netcdf-c-4.4.0
 BINARY = grib2nc4
 CMP_BINARY = nc4cmp
 OBJS = processmetfields.o verttransform_grib2nc4_ecmwf.o verttransform_grib2nc4_gfs.o
-FPMODOBJS = ${FLEXPART_SRC}/par_mod.o ${FLEXPART_SRC}/com_mod.o ${FLEXPART_SRC}/class_vtable_mod.o ${FLEXPART_SRC}/cmapf_mod.o ${FLEXPART_SRC}/conv_mod.o 
-FLXPRTOBJS = ${FLEXPART_SRC}/detectformat.o ${FLEXPART_SRC}/grib2check.o ${FLEXPART_SRC}/shift_field_0.o ${FLEXPART_SRC}/gridcheck.o \
-	     ${FLEXPART_SRC}/readwind.o ${FLEXPART_SRC}/readwind_nests.o ${FLEXPART_SRC}/calcpar.o ${FLEXPART_SRC}/calcpar_nests.o \
-             ${FLEXPART_SRC}/shift_field.o ${FLEXPART_SRC}/pbl_profile.o ${FLEXPART_SRC}/scalev.o ${FLEXPART_SRC}/obukhov.o \
-             ${FLEXPART_SRC}/richardson.o ${FLEXPART_SRC}/ew.o ${FLEXPART_SRC}/getvdep.o ${FLEXPART_SRC}/calcpv.o ${FLEXPART_SRC}/obukhov_gfs.o \
-             ${FLEXPART_SRC}/richardson_gfs.o ${FLEXPART_SRC}/getvdep_nests.o ${FLEXPART_SRC}/calcpv_nests.o ${FLEXPART_SRC}/psim.o ${FLEXPART_SRC}/psih.o \
-             ${FLEXPART_SRC}/qvsat.o ${FLEXPART_SRC}/caldate.o ${FLEXPART_SRC}/getrb.o ${FLEXPART_SRC}/raerod.o ${FLEXPART_SRC}/getrc.o ${FLEXPART_SRC}/partdep.o \
-             ${FLEXPART_SRC}/verttransform.o ${FLEXPART_SRC}/verttransform_nests.o ${FLEXPART_SRC}/readwind_gfs.o \
-             ${FLEXPART_SRC}/calcpar_gfs.o ${FLEXPART_SRC}/verttransform_gfs.o ${FLEXPART_SRC}/gridcheck_gfs.o
+FPMODOBJS = par_mod.o com_mod.o class_vtable_mod.o cmapf_mod.o conv_mod.o 
+FLXPRTOBJS = detectformat.o grib2check.o shift_field_0.o gridcheck.o \
+	     readwind.o readwind_nests.o calcpar.o calcpar_nests.o \
+             shift_field.o pbl_profile.o scalev.o obukhov.o \
+             richardson.o ew.o getvdep.o calcpv.o obukhov_gfs.o \
+             richardson_gfs.o getvdep_nests.o calcpv_nests.o psim.o psih.o \
+             qvsat.o caldate.o getrb.o raerod.o getrc.o partdep.o \
+             verttransform.o verttransform_nests.o readwind_gfs.o \
+             calcpar_gfs.o verttransform_gfs.o gridcheck_gfs.o
 
 
 VPATH = ${FLEXPART_SRC}
